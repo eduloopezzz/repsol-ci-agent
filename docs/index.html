@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Repsol CI Co-Pilot · Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d0d12;--paper:#f5f2ec;--surface:#fffffe;--border:#d8d3c8;--border2:#b8b2a7;
+  --accent:#c41e3a;--accent2:#1a3a5c;--gold:#9a7b2f;--text:#1a1a22;--muted:#6b6560;
+  --high:#1a6b3c;--mid:#7a5c00;--low:#8b1a1a;
+  --mono:'JetBrains Mono',monospace;--serif:'Playfair Display',serif;--body:'Libre Baskerville',serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.7;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+/* Header */
+header{border-bottom:2px solid var(--ink);padding:3rem 0 2rem;position:relative}
+.header-rule{position:absolute;top:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,var(--accent) 0,var(--accent) 40%,var(--ink) 40%,var(--ink) 100%);background-size:120px 100%}
+.kicker{font-family:var(--mono);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;animation:fadeUp .6s .1s ease both}
+h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--ink);animation:fadeUp .6s .2s ease both}
+h1 em{color:var(--accent);font-style:normal}
+.deck{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.05em;margin-top:.8rem;animation:fadeUp .6s .3s ease both}
+.header-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border);animation:fadeUp .6s .4s ease both}
+.meta-pill{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid var(--border2);color:var(--muted)}
+.meta-pill.live{border-color:var(--high);color:var(--high)}
+.meta-pill.live::before{content:'● ';font-size:.5rem}
+
+/* Verdict banner */
+.verdict-banner{background:var(--ink);color:var(--paper);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin:2rem 0;animation:fadeUp .6s .5s ease both}
+.verdict-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#888;margin-bottom:.3rem}
+.verdict-value{font-family:var(--serif);font-size:2rem;font-weight:900;letter-spacing:.05em}
+.verdict-value.go{color:#4ade80}.verdict-value.nogo{color:#f87171}.verdict-value.cond{color:#fbbf24}.verdict-value.pending{color:#555;font-size:1.1rem}
+.verdict-sub{font-family:var(--mono);font-size:.6rem;color:#666;margin-top:.2rem}
+.stats-row{display:flex;gap:2rem;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-num{font-family:var(--serif);font-size:1.8rem;font-weight:700;line-height:1}
+.stat-num.g{color:#4ade80}.stat-num.a{color:#fbbf24}.stat-num.r{color:#f87171}
+.stat-lbl{font-family:var(--mono);font-size:.55rem;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem}
+
+/* Sections */
+section{margin:3rem 0;animation:fadeUp .7s ease both}
+section:nth-child(1){animation-delay:.5s}
+section:nth-child(2){animation-delay:.6s}
+section:nth-child(3){animation-delay:.7s}
+.section-head{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:.6rem;margin-bottom:1.5rem}
+.section-num{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.15em}
+h2{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--ink)}
+
+/* Tabs */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.5rem;overflow-x:auto}
+.tab-btn{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 1.2rem;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{border-bottom-color:var(--accent);color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* Analysis box */
+.analysis-box{border:1px solid var(--border);background:var(--surface)}
+.analysis-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:.8rem 1.2rem;border-bottom:1px solid var(--border);background:#faf8f4}
+.iter-badge{font-family:var(--mono);font-size:.58rem;background:var(--paper);border:1px solid var(--border);padding:.2rem .5rem;color:var(--muted)}
+.answer-text{padding:1.2rem;font-size:.82rem;line-height:1.75;color:#3a3530;white-space:pre-wrap;font-family:var(--body);max-height:280px;overflow-y:auto;border-bottom:1px solid var(--border)}
+
+/* Findings */
+.findings-list{display:flex;flex-direction:column}
+.finding-row{display:grid;grid-template-columns:72px 1fr;border-top:1px solid var(--border);animation:slideIn .3s ease}
+.conf-bar{display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:.52rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:.8rem .4rem}
+.conf-bar.HIGH{background:#f0faf4;color:var(--high);border-right:3px solid var(--high)}
+.conf-bar.MEDIUM{background:#fefbf0;color:var(--mid);border-right:3px solid #c9a227}
+.conf-bar.LOW{background:#fdf0f0;color:var(--low);border-right:3px solid var(--low)}
+.finding-content{padding:.8rem 1rem}
+.finding-claim{font-size:.82rem;line-height:1.6;margin-bottom:.4rem;color:var(--ink)}
+.finding-sources{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
+.finding-sources a{color:var(--accent2);text-decoration:underline;word-break:break-all}
+.finding-unc{font-family:var(--mono);font-size:.58rem;color:#7a5c00;margin-top:.3rem}
+.hitl-badge{display:inline-block;font-family:var(--mono);font-size:.52rem;border:1px solid var(--low);color:var(--low);padding:.1rem .4rem;margin-top:.3rem;letter-spacing:.08em}
+
+/* Trace */
+details{border:1px solid var(--border);margin-top:1rem}
+summary{cursor:pointer;font-family:var(--mono);font-size:.62rem;color:var(--muted);padding:.6rem 1rem;letter-spacing:.08em;list-style:none;display:flex;align-items:center;gap:.5rem}
+summary::before{content:'▶';font-size:.5rem;transition:transform .2s}
+details[open] summary::before{transform:rotate(90deg)}
+.trace-body{background:#0d0d12;padding:1rem;font-family:var(--mono);font-size:.6rem;color:#5a6a8a;overflow-x:auto}
+.trace-entry{margin-bottom:.4rem;padding-left:1rem;border-left:2px solid #1e2a3a}
+.t-iter{color:#c41e3a}.t-tool{color:#c9a227}.t-ok{color:#4ade80}.t-fail{color:#f87171}
+
+/* AMC table */
+.amc-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.amc-table th{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.6rem .8rem;background:var(--ink);color:var(--paper);text-align:left}
+.amc-table td{padding:.7rem .8rem;border-bottom:1px solid var(--border);vertical-align:top}
+.amc-table tr:hover td{background:#faf8f4}
+.score-pill{display:inline-block;font-family:var(--mono);font-size:.65rem;padding:.15rem .5rem;border:1px solid;font-weight:500}
+.score-5{color:var(--low);border-color:var(--low);background:#fdf0f0}
+.score-4{color:#7a3a00;border-color:#c9a227;background:#fef8e7}
+.score-3{color:var(--accent2);border-color:var(--accent2);background:#eef3f8}
+.prob-bar{display:flex;align-items:center;gap:.5rem}
+.bar-bg{flex:1;height:6px;background:var(--border);position:relative}
+.bar-fill{height:100%;position:absolute;top:0;left:0;transition:width .8s ease}
+
+/* Scenarios */
+.matrix-wrap{display:grid;grid-template-columns:28px 1fr}
+.matrix-right{display:grid;grid-template-rows:1fr auto}
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
+.scenario-cell{background:var(--surface);padding:1.2rem;transition:background .2s}
+.scenario-cell:hover{filter:brightness(.97)}
+.scenario-cell.best{background:#f0faf4}
+.scenario-cell.worst{background:#fdf0f0}
+.scenario-cell.ok{background:#fefbf0}
+.sc-name{font-family:var(--serif);font-size:.9rem;font-weight:700;margin-bottom:.3rem}
+.sc-prob{font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:.4rem}
+.sc-action{font-family:var(--mono);font-size:.58rem;padding:.2rem .5rem;border:1px solid;display:inline-block}
+.sc-action.go-now{color:var(--high);border-color:var(--high)}
+.sc-action.build{color:var(--accent2);border-color:var(--accent2)}
+.sc-action.jv{color:var(--gold);border-color:var(--gold)}
+.sc-action.wait{color:var(--muted);border-color:var(--border2)}
+.sc-desc{font-size:.72rem;color:var(--muted);margin-top:.4rem;line-height:1.5}
+.axis-x{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:.4rem 0;border-top:1px solid var(--border)}
+.axis-y{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--border)}
+
+/* EWS */
+.ews-row{display:grid;grid-template-columns:140px 1fr 80px 120px;border-bottom:1px solid var(--border)}
+.ews-row.header{background:var(--ink)}
+.ews-cell{padding:.7rem .8rem;font-size:.75rem;border-right:1px solid var(--border)}
+.ews-cell:last-child{border-right:none}
+.ews-row.header .ews-cell{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:#aaa}
+.kit-tag{font-family:var(--mono);font-size:.55rem;border:1px solid;padding:.1rem .4rem;display:inline-block;margin-bottom:.3rem}
+.kit-1{color:var(--low);border-color:var(--low)}
+.kit-2{color:var(--accent2);border-color:var(--accent2)}
+.kit-3{color:var(--gold);border-color:var(--gold)}
+.kit-x{color:var(--muted);border-color:var(--border2)}
+.freq-badge{font-family:var(--mono);font-size:.55rem;background:var(--border);padding:.15rem .4rem;display:inline-block}
+.threshold-red{color:var(--low);font-weight:500}
+
+/* Empty state */
+.empty-state{text-align:center;padding:4rem 2rem;border:1px dashed var(--border2)}
+.empty-title{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--muted);margin-bottom:1rem}
+.empty-code{font-family:var(--mono);font-size:.72rem;background:var(--ink);color:#c9a227;padding:1rem 1.5rem;display:inline-block;margin-top:1rem;text-align:left;line-height:2}
+
+/* Loading */
+#loading{display:flex;align-items:center;justify-content:center;min-height:30vh}
+.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+
+/* Footer */
+footer{border-top:2px solid var(--ink);padding:2rem 0;margin-top:4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-brand{font-family:var(--serif);font-size:1.1rem;font-weight:700}
+.footer-meta{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-align:right}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--border2)}
+
+@media(max-width:640px){
+  .wrap{padding:0 1rem}
+  .scenario-grid{grid-template-columns:1fr}
+  .ews-row{grid-template-columns:1fr 1fr}
+  .matrix-wrap{grid-template-columns:1fr}
+  .axis-y{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="header-rule"></div>
+  <div class="kicker">// CI Co-Pilot · UFV Corporate Intelligence 2025-26 · Grupo 5</div>
+  <h1>REPSOL <em>×</em> ZUNDER<br>M&amp;A Intelligence</h1>
+  <div class="deck">Sistema agéntico de Inteligencia Competitiva · ReAct Loop · RAG · TN10-TN12</div>
+  <div class="header-meta">
+    <span class="meta-pill live">Sistema activo</span>
+    <span class="meta-pill">Ejecutado: <strong id="meta-date">—</strong></span>
+    <span class="meta-pill">Modelo: <strong id="meta-model">—</strong></span>
+    <span class="meta-pill">Análisis: <strong id="meta-analyses">—</strong></span>
+  </div>
+</header>
+
+<div class="verdict-banner">
+  <div>
+    <div class="verdict-label">Recomendación estratégica del agente</div>
+    <div class="verdict-value pending" id="verdict-val">CARGANDO...</div>
+    <div class="verdict-sub" id="verdict-sub">El agente está procesando los datos</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num g" id="cnt-high">—</div><div class="stat-lbl">HIGH confidence</div></div>
+    <div class="stat-item"><div class="stat-num a" id="cnt-mid">—</div><div class="stat-lbl">MEDIUM</div></div>
+    <div class="stat-item"><div class="stat-num r" id="cnt-low">—</div><div class="stat-lbl">Human review</div></div>
+    <div class="stat-item"><div class="stat-num" style="color:#aaa" id="cnt-total">—</div><div class="stat-lbl">Total findings</div></div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="loading"><div class="spinner"></div></div>
+
+<!-- Main content -->
+<div id="main" style="display:none">
+
+  <!-- 01 Agent output -->
+  <section>
+    <div class="section-head"><span class="section-num">01</span><h2>Output del agente — Análisis CI automatizado</h2></div>
+    <div class="tab-bar" id="tab-bar"></div>
+    <div id="tab-panels"></div>
+  </section>
+
+  <!-- 02 AMC -->
+  <section>
+    <div class="section-head"><span class="section-num">02</span><h2>Matriz AMC — Competidores</h2></div>
+    <table class="amc-table">
+      <thead><tr><th>Competidor</th><th>Awareness</th><th>Motivation</th><th>Capability</th><th>Prob. respuesta</th><th>Timeline</th></tr></thead>
+      <tbody id="amc-body"></tbody>
+    </table>
+  </section>
+
+  <!-- 03 Scenarios -->
+  <section>
+    <div class="section-head"><span class="section-num">03</span><h2>Escenarios (Shell Method 2×2)</h2></div>
+    <div class="matrix-wrap">
+      <div class="axis-y">Consolidación HPC</div>
+      <div class="matrix-right">
+        <div class="scenario-grid" id="scenario-grid"></div>
+        <div class="axis-x">← Adopción BEV Lenta &nbsp;·&nbsp; Adopción BEV Rápida →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 EWS -->
+  <section>
+    <div class="section-head"><span class="section-num">04</span><h2>Early Warning System — KITs de alerta</h2></div>
+    <div id="ews-table"></div>
+  </section>
+
+</div><!-- /main -->
+
+<footer>
+  <div class="footer-brand">Repsol CI Co-Pilot</div>
+  <div class="footer-meta">Universidad Francisco de Vitoria · Grupo 5<br>Corporate Intelligence 2025-26 · TN10-TN12<br>Agente: Claude (Anthropic API) · ChromaDB RAG · GitHub Pages</div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+// ── Static data (always shown) ────────────────────────────────────
+const AMC_DATA=[
+  {name:'Iberdrola',a:5,m:5,c:5,prob:95,timeline:'0-3 meses'},
+  {name:'Zunder (target)',a:4,m:3,c:4,prob:60,timeline:'6-18 meses'},
+  {name:'Cepsa / Moeve',a:4,m:4,c:3,prob:65,timeline:'3-9 meses'},
+  {name:'Endesa X-Way',a:4,m:3,c:3,prob:50,timeline:'3-9 meses'},
+];
+const SCENARIOS=[
+  {name:'🏆 Carrera del Oro',prob:'45%',action:'ADQUIRIR AHORA',cls:'best',acls:'go-now',desc:'BEV rápido + consolidación: ventana M&A cierra en 12 meses'},
+  {name:'🌪 Guerra de Desgaste',prob:'25%',action:'CONSTRUIR',cls:'ok',acls:'build',desc:'Adopción fuerte pero mercado fragmentado, guerra de precios kWh'},
+  {name:'🌱 Oasis Lento',prob:'20%',action:'JV / PARTNERSHIP',cls:'ok',acls:'jv',desc:'BEV lento (<15%) + pocos jugadores supervivientes por escala'},
+  {name:'🏜 Travesía del Desierto',prob:'10%',action:'NO ADQUIRIR',cls:'worst',acls:'wait',desc:'Estancamiento BEV + muchos operadores heridos + financiación seca'},
+];
+const EWS_DATA=[
+  {kit:'KIT-1',kitcls:'kit-1',indicator:'Nuevos puntos HPC Iberdrola-BP',source:'Electromaps + press',freq:'Semanal',threshold:'>50 pts/trimestre',action:'Acelerar proceso M&A'},
+  {kit:'KIT-1',kitcls:'kit-1',indicator:'Anuncios M&A Cepsa/Moeve',source:'CNMV + prensa',freq:'Diario',threshold:'Cualquier anuncio',action:'Revisión urgente del timeline'},
+  {kit:'KIT-2',kitcls:'kit-2',indicator:'Nuevo funding round Zunder',source:'Crunchbase + EIB',freq:'Mensual',threshold:'Cualquier evento',action:'Contacto inmediato con Mirova'},
+  {kit:'KIT-2',kitcls:'kit-2',indicator:'Vacantes C-level Zunder',source:'LinkedIn',freq:'Semanal',threshold:'Cualquier vacante',action:'Análisis señal de salida'},
+  {kit:'KIT-3',kitcls:'kit-3',indicator:'Revisión AFIR (600kW propuesta PE)',source:'EUR-Lex + MITECO',freq:'Trimestral',threshold:'Propuesta en trámite',action:'Recalcular NPV con re-CapEx'},
+  {kit:'KIT-3',kitcls:'kit-3',indicator:'Dotación PERTE VEC / MOVES III',source:'MITECO BOE',freq:'Trimestral',threshold:'Variación >±20%',action:'Ajustar modelo demanda BEV'},
+  {kit:'CROSS',kitcls:'kit-x',indicator:'Matriculaciones BEV España',source:'ANFAC mensual',freq:'Mensual',threshold:'<10% o >20%',action:'Revisar escenario base'},
+];
+
+// ── Helpers ───────────────────────────────────────────────────────
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function fmtDate(iso){
+  if(!iso)return'—';
+  try{return new Date(iso).toLocaleString('es-ES',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+  catch{return iso}
+}
+function extractVerdict(analyses){
+  const text=(analyses||[]).map(a=>(a.answer||'').toUpperCase()).join(' ');
+  if(text.includes('CONDITIONAL GO')||text.includes('GO CONDICIONAL'))return{v:'CONDITIONAL GO',cls:'cond',sub:'Adquisición recomendada con condiciones — ver hedging actions'};
+  if(text.includes('NO-GO')||text.includes('NO GO'))return{v:'NO-GO',cls:'nogo',sub:'Adquisición no recomendada en condiciones actuales'};
+  if(text.match(/\bGO\b/))return{v:'GO',cls:'go',sub:'Adquisición recomendada — ventana de consolidación abierta'};
+  return{v:'—',cls:'pending',sub:'Sin veredicto explícito en el output del agente'};
+}
+
+// ── Load last_run.json ────────────────────────────────────────────
+async function loadData(){
+  try{
+    const r=await fetch('./last_run.json?t='+Date.now());
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return await r.json();
+  }catch(e){return null}
+}
+
+// ── Render agent tabs ─────────────────────────────────────────────
+function renderAnalyses(analyses){
+  const bar=document.getElementById('tab-bar');
+  const panels=document.getElementById('tab-panels');
+  analyses.forEach((a,i)=>{
+    const btn=document.createElement('button');
+    btn.className='tab-btn'+(i===0?' active':'');
+    btn.textContent=a.label||('Análisis '+(i+1));
+    btn.onclick=()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-'+i).classList.add('active');
+    };
+    bar.appendChild(btn);
+
+    const findings=a.findings||[];
+    const findingsHtml=findings.length
+      ? '<div class="findings-list">'+findings.map(f=>{
+          const conf=f.confidence||'LOW';
+          const srcs=(f.sources||[]).map(s=>s.startsWith('http')
+            ?`<a href="${esc(s)}" target="_blank" rel="noopener">${esc(s)}</a>`:esc(s)).join(' · ');
+          const unc=f.uncertainty?`<div class="finding-unc">⚡ ${esc(f.uncertainty)}</div>`:'';
+          const hitl=f.human_review?'<span class="hitl-badge">⚠ HUMAN-IN-THE-LOOP</span>':'';
+          return`<div class="finding-row">
+            <div class="conf-bar ${conf}">${conf}</div>
+            <div class="finding-content">
+              <div class="finding-claim">${esc(f.claim)}</div>
+              <div class="finding-sources">${srcs||'<em>sin fuente</em>'}</div>
+              ${unc}${hitl}
+            </div>
+          </div>`;
+        }).join('')+'</div>'
+      : '<div style="padding:1rem;color:var(--muted);font-family:var(--mono);font-size:.75rem">Sin findings estructurados en este análisis.</div>';
+
+    const traceHtml=(a.trace||[]).map(t=>{
+      if(t.tool_call){
+        const ok=t.ok;
+        return`<div class="trace-entry"><span class="t-iter">[iter ${t.iteration}]</span> <span class="t-tool">🔧 ${t.tool_call}</span> (${JSON.stringify(t.input||{}).slice(0,70)}...) <span class="${ok?'t-ok':'t-fail'}">${ok?'✓ ok':'✗ error'}</span></div>`;
+      }
+      return`<div class="trace-entry"><span class="t-iter">[iter ${t.iteration}]</span> stop=${t.stop_reason} blocks=[${(t.blocks||[]).join(', ')}]</div>`;
+    }).join('');
+
+    const div=document.createElement('div');
+    div.className='tab-panel'+(i===0?' active':'');
+    div.id='panel-'+i;
+    div.innerHTML=`
+      <div class="analysis-box">
+        <div class="analysis-meta">
+          <span class="iter-badge">Iteraciones ReAct: ${a.iterations_used||'?'} / 8</span>
+          <span class="iter-badge">Findings: ${findings.length}</span>
+          <span class="iter-badge">${fmtDate(a.timestamp)}</span>
+        </div>
+        <div class="answer-text">${esc(a.answer||'Sin respuesta.')}</div>
+        ${findingsHtml}
+        <details>
+          <summary>Ver traza ReAct completa (${(a.trace||[]).length} pasos)</summary>
+          <div class="trace-body">${traceHtml||'<em>Sin traza</em>'}</div>
+        </details>
+      </div>`;
+    panels.appendChild(div);
+  });
+}
+
+// ── Render AMC ────────────────────────────────────────────────────
+function renderAMC(){
+  const sc=s=>s>=5?'score-5':s===4?'score-4':'score-3';
+  const pc=p=>p>=80?'#8b1a1a':p>=60?'#7a5c00':'#1a3a5c';
+  document.getElementById('amc-body').innerHTML=AMC_DATA.map(r=>`
+    <tr>
+      <td style="font-weight:500;font-family:var(--mono);font-size:.75rem">${r.name}</td>
+      <td><span class="score-pill ${sc(r.a)}">${r.a}/5</span></td>
+      <td><span class="score-pill ${sc(r.m)}">${r.m}/5</span></td>
+      <td><span class="score-pill ${sc(r.c)}">${r.c}/5</span></td>
+      <td><div class="prob-bar"><div class="bar-bg"><div class="bar-fill" style="width:${r.prob}%;background:${pc(r.prob)}"></div></div><span style="font-family:var(--mono);font-size:.65rem;min-width:34px">${r.prob}%</span></div></td>
+      <td style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">${r.timeline}</td>
+    </tr>`).join('');
+}
+
+// ── Render Scenarios ──────────────────────────────────────────────
+function renderScenarios(){
+  document.getElementById('scenario-grid').innerHTML=SCENARIOS.map(s=>`
+    <div class="scenario-cell ${s.cls}">
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-prob">Prob: ${s.prob}</div>
+      <span class="sc-action ${s.acls}">${s.action}</span>
+      <div class="sc-desc">${s.desc}</div>
+    </div>`).join('');
+}
+
+// ── Render EWS ───────────────────────────────────────────────────
+function renderEWS(){
+  document.getElementById('ews-table').innerHTML=`
+    <div class="ews-row header">
+      <div class="ews-cell">KIT / Indicador</div>
+      <div class="ews-cell">Fuente · Umbral · Acción</div>
+      <div class="ews-cell">Frecuencia</div>
+      <div class="ews-cell">Responsable</div>
+    </div>`+EWS_DATA.map(r=>`
+    <div class="ews-row">
+      <div class="ews-cell"><span class="kit-tag ${r.kitcls}">${r.kit}</span><br><span style="font-size:.72rem">${r.indicator}</span></div>
+      <div class="ews-cell" style="font-size:.72rem">
+        <span style="color:var(--muted);font-family:var(--mono);font-size:.58rem">${r.source}</span><br>
+        <span class="threshold-red">▲ ${r.threshold}</span><br>
+        <span style="color:var(--muted)">→ ${r.action}</span>
+      </div>
+      <div class="ews-cell"><span class="freq-badge">${r.freq}</span></div>
+      <div class="ews-cell" style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">CI Analyst</div>
+    </div>`).join('');
+}
+
+// ── Empty state ───────────────────────────────────────────────────
+function renderEmpty(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('main').style.display='block';
+  document.getElementById('tab-panels').innerHTML=`
+    <div class="empty-state">
+      <div class="empty-title">El agente aún no ha generado resultados</div>
+      <p style="color:var(--muted);font-size:.82rem">Ejecuta el notebook en Google Colab y sube el output al repositorio.</p>
+      <div class="empty-code">
+        1. Abre repsol_ci_agent.ipynb en Google Colab<br>
+        2. Ejecuta todas las celdas en orden<br>
+        3. Descarga output/last_run.json (Celda 6)<br>
+        4. Súbelo a tu repo: output/last_run.json<br>
+        5. git push → este dashboard se actualiza
+      </div>
+    </div>`;
+  renderAMC();renderScenarios();renderEWS();
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+async function init(){
+  const data=await loadData();
+  document.getElementById('loading').style.display='none';
+
+  if(!data||!data.analyses||!data.analyses.length){
+    renderEmpty();return;
+  }
+
+  document.getElementById('main').style.display='block';
+
+  // Meta
+  document.getElementById('meta-date').textContent=fmtDate(data.generated_at);
+  document.getElementById('meta-model').textContent=data.model||'—';
+  document.getElementById('meta-analyses').textContent=data.analyses.length;
+
+  // Verdict
+  const {v,cls,sub}=extractVerdict(data.analyses);
+  document.getElementById('verdict-val').textContent=v;
+  document.getElementById('verdict-val').className='verdict-value '+cls;
+  document.getElementById('verdict-sub').textContent=sub;
+
+  // Stats
+  const s=data.summary||{};
+  document.getElementById('cnt-total').textContent=s.total_findings??'—';
+  document.getElementById('cnt-high').textContent=s.high_confidence??'—';
+  document.getElementById('cnt-mid').textContent=s.medium_confidence??'—';
+  document.getElementById('cnt-low').textContent=s.low_confidence_human_review??'—';
+
+  // Analyses
+  renderAnalyses(data.analyses);
+
+  // Static
+  renderAMC();renderScenarios();renderEWS();
+}
+
+init();
+</script>
+</body>
+</html>
