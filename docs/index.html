@@ -32,7 +32,7 @@ h1 em{color:var(--accent);font-style:normal}
 .meta-pill.live{border-color:var(--high);color:var(--high)}
 .meta-pill.live::before{content:'● ';font-size:.5rem}
 
-/* Verdict banner */
+/* Verdict */
 .verdict-banner{background:var(--ink);color:var(--paper);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin:2rem 0;animation:fadeUp .6s .5s ease both}
 .verdict-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#888;margin-bottom:.3rem}
 .verdict-value{font-family:var(--serif);font-size:2rem;font-weight:900;letter-spacing:.05em}
@@ -45,31 +45,17 @@ h1 em{color:var(--accent);font-style:normal}
 .stat-lbl{font-family:var(--mono);font-size:.55rem;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem}
 
 /* Sections */
-section{margin:3rem 0;animation:fadeUp .7s ease both}
-section:nth-child(1){animation-delay:.5s}
-section:nth-child(2){animation-delay:.6s}
-section:nth-child(3){animation-delay:.7s}
+section{margin:3rem 0}
+section:nth-child(1){animation:fadeUp .7s .5s ease both}
+section:nth-child(2){animation:fadeUp .7s .6s ease both}
+section:nth-child(3){animation:fadeUp .7s .7s ease both}
+section:nth-child(4){animation:fadeUp .7s .8s ease both}
 .section-head{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:.6rem;margin-bottom:1.5rem}
 .section-num{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.15em}
 h2{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--ink)}
 
-/* Tabs */
-.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.5rem;overflow-x:auto}
-.tab-btn{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 1.2rem;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
-.tab-btn:hover{color:var(--text)}
-.tab-btn.active{border-bottom-color:var(--accent);color:var(--accent)}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
-
-/* Analysis box */
-.analysis-box{border:1px solid var(--border);background:var(--surface)}
-.analysis-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:.8rem 1.2rem;border-bottom:1px solid var(--border);background:#faf8f4}
-.iter-badge{font-family:var(--mono);font-size:.58rem;background:var(--paper);border:1px solid var(--border);padding:.2rem .5rem;color:var(--muted)}
-.answer-text{padding:1.2rem;font-size:.82rem;line-height:1.75;color:#3a3530;white-space:pre-wrap;font-family:var(--body);max-height:280px;overflow-y:auto;border-bottom:1px solid var(--border)}
-
 /* Findings */
-.findings-list{display:flex;flex-direction:column}
-.finding-row{display:grid;grid-template-columns:72px 1fr;border-top:1px solid var(--border);animation:slideIn .3s ease}
+.finding-row{display:grid;grid-template-columns:72px 1fr;border:1px solid var(--border);margin-bottom:.5rem;background:var(--surface);animation:slideIn .3s ease}
 .conf-bar{display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:.52rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:.8rem .4rem}
 .conf-bar.HIGH{background:#f0faf4;color:var(--high);border-right:3px solid var(--high)}
 .conf-bar.MEDIUM{background:#fefbf0;color:var(--mid);border-right:3px solid #c9a227}
@@ -81,16 +67,19 @@ h2{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--ink)}
 .finding-unc{font-family:var(--mono);font-size:.58rem;color:#7a5c00;margin-top:.3rem}
 .hitl-badge{display:inline-block;font-family:var(--mono);font-size:.52rem;border:1px solid var(--low);color:var(--low);padding:.1rem .4rem;margin-top:.3rem;letter-spacing:.08em}
 
+/* Summary box */
+.summary-box{background:var(--surface);border:1px solid var(--border);padding:1.2rem 1.5rem;margin-bottom:1.5rem;font-size:.85rem;line-height:1.7;color:#3a3530;border-left:4px solid var(--accent)}
+
 /* Trace */
 details{border:1px solid var(--border);margin-top:1rem}
 summary{cursor:pointer;font-family:var(--mono);font-size:.62rem;color:var(--muted);padding:.6rem 1rem;letter-spacing:.08em;list-style:none;display:flex;align-items:center;gap:.5rem}
 summary::before{content:'▶';font-size:.5rem;transition:transform .2s}
 details[open] summary::before{transform:rotate(90deg)}
-.trace-body{background:#0d0d12;padding:1rem;font-family:var(--mono);font-size:.6rem;color:#5a6a8a;overflow-x:auto}
+.trace-body{background:#0d0d12;padding:1rem;font-family:var(--mono);font-size:.6rem;color:#5a6a8a;overflow-x:auto;max-height:300px;overflow-y:auto}
 .trace-entry{margin-bottom:.4rem;padding-left:1rem;border-left:2px solid #1e2a3a}
-.t-iter{color:#c41e3a}.t-tool{color:#c9a227}.t-ok{color:#4ade80}.t-fail{color:#f87171}
+.t-tool{color:#c9a227}.t-ok{color:#4ade80}
 
-/* AMC table */
+/* AMC */
 .amc-table{width:100%;border-collapse:collapse;font-size:.78rem}
 .amc-table th{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.6rem .8rem;background:var(--ink);color:var(--paper);text-align:left}
 .amc-table td{padding:.7rem .8rem;border-bottom:1px solid var(--border);vertical-align:top}
@@ -99,6 +88,7 @@ details[open] summary::before{transform:rotate(90deg)}
 .score-5{color:var(--low);border-color:var(--low);background:#fdf0f0}
 .score-4{color:#7a3a00;border-color:#c9a227;background:#fef8e7}
 .score-3{color:var(--accent2);border-color:var(--accent2);background:#eef3f8}
+.score-2{color:var(--muted);border-color:var(--border2);background:#f5f2ec}
 .prob-bar{display:flex;align-items:center;gap:.5rem}
 .bar-bg{flex:1;height:6px;background:var(--border);position:relative}
 .bar-fill{height:100%;position:absolute;top:0;left:0;transition:width .8s ease}
@@ -107,24 +97,30 @@ details[open] summary::before{transform:rotate(90deg)}
 .matrix-wrap{display:grid;grid-template-columns:28px 1fr}
 .matrix-right{display:grid;grid-template-rows:1fr auto}
 .scenario-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
-.scenario-cell{background:var(--surface);padding:1.2rem;transition:background .2s}
+.scenario-cell{background:var(--surface);padding:1.2rem;transition:background .2s;position:relative}
 .scenario-cell:hover{filter:brightness(.97)}
-.scenario-cell.best{background:#f0faf4}
-.scenario-cell.worst{background:#fdf0f0}
-.scenario-cell.ok{background:#fefbf0}
+.sc-label{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
 .sc-name{font-family:var(--serif);font-size:.9rem;font-weight:700;margin-bottom:.3rem}
 .sc-prob{font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:.4rem}
-.sc-action{font-family:var(--mono);font-size:.58rem;padding:.2rem .5rem;border:1px solid;display:inline-block}
+.sc-action{font-family:var(--mono);font-size:.58rem;padding:.2rem .5rem;border:1px solid;display:inline-block;margin-bottom:.4rem}
 .sc-action.go-now{color:var(--high);border-color:var(--high)}
 .sc-action.build{color:var(--accent2);border-color:var(--accent2)}
 .sc-action.jv{color:var(--gold);border-color:var(--gold)}
 .sc-action.wait{color:var(--muted);border-color:var(--border2)}
-.sc-desc{font-size:.72rem;color:var(--muted);margin-top:.4rem;line-height:1.5}
+.sc-npv{font-family:var(--mono);font-size:.6rem;font-weight:500}
+.sc-npv.pos{color:var(--high)}.sc-npv.neg{color:var(--low)}
+.sc-desc{font-size:.72rem;color:var(--muted);line-height:1.5}
 .axis-x{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;padding:.4rem 0;border-top:1px solid var(--border)}
 .axis-y{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--border)}
 
+/* Financial summary */
+.fin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem}
+.fin-card{background:var(--surface);padding:1.2rem 1rem}
+.fin-num{font-family:var(--serif);font-size:2rem;font-weight:900;line-height:1;color:var(--ink)}
+.fin-lbl{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem}
+
 /* EWS */
-.ews-row{display:grid;grid-template-columns:140px 1fr 80px 120px;border-bottom:1px solid var(--border)}
+.ews-row{display:grid;grid-template-columns:130px 1fr 80px 110px;border-bottom:1px solid var(--border)}
 .ews-row.header{background:var(--ink)}
 .ews-cell{padding:.7rem .8rem;font-size:.75rem;border-right:1px solid var(--border)}
 .ews-cell:last-child{border-right:none}
@@ -136,6 +132,9 @@ details[open] summary::before{transform:rotate(90deg)}
 .kit-x{color:var(--muted);border-color:var(--border2)}
 .freq-badge{font-family:var(--mono);font-size:.55rem;background:var(--border);padding:.15rem .4rem;display:inline-block}
 .threshold-red{color:var(--low);font-weight:500}
+
+/* Empty / no-data states */
+.no-data{font-family:var(--mono);font-size:.72rem;color:var(--muted);padding:1.5rem;border:1px dashed var(--border);text-align:center}
 
 /* Empty state */
 .empty-state{text-align:center;padding:4rem 2rem;border:1px dashed var(--border2)}
@@ -158,7 +157,6 @@ footer{border-top:2px solid var(--ink);padding:2rem 0;margin-top:4rem;display:fl
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--paper)}
 ::-webkit-scrollbar-thumb{background:var(--border2)}
-
 @media(max-width:640px){
   .wrap{padding:0 1rem}
   .scenario-grid{grid-template-columns:1fr}
@@ -175,12 +173,12 @@ footer{border-top:2px solid var(--ink);padding:2rem 0;margin-top:4rem;display:fl
   <div class="header-rule"></div>
   <div class="kicker">// CI Co-Pilot · UFV Corporate Intelligence 2025-26 · Grupo 5</div>
   <h1>REPSOL <em>×</em> ZUNDER<br>M&amp;A Intelligence</h1>
-  <div class="deck">Sistema agéntico de Inteligencia Competitiva · ReAct Loop · RAG · TN10-TN12</div>
+  <div class="deck">Sistema agéntico de Inteligencia Competitiva · Gemini 1.5 Pro · TN10-TN12</div>
   <div class="header-meta">
     <span class="meta-pill live">Sistema activo</span>
     <span class="meta-pill">Ejecutado: <strong id="meta-date">—</strong></span>
     <span class="meta-pill">Modelo: <strong id="meta-model">—</strong></span>
-    <span class="meta-pill">Análisis: <strong id="meta-analyses">—</strong></span>
+    <span class="meta-pill">Tool calls: <strong id="meta-tools">—</strong></span>
   </div>
 </header>
 
@@ -188,105 +186,73 @@ footer{border-top:2px solid var(--ink);padding:2rem 0;margin-top:4rem;display:fl
   <div>
     <div class="verdict-label">Recomendación estratégica del agente</div>
     <div class="verdict-value pending" id="verdict-val">CARGANDO...</div>
-    <div class="verdict-sub" id="verdict-sub">El agente está procesando los datos</div>
+    <div class="verdict-sub" id="verdict-sub">Procesando datos...</div>
   </div>
   <div class="stats-row">
-    <div class="stat-item"><div class="stat-num g" id="cnt-high">—</div><div class="stat-lbl">HIGH confidence</div></div>
+    <div class="stat-item"><div class="stat-num g" id="cnt-high">—</div><div class="stat-lbl">HIGH</div></div>
     <div class="stat-item"><div class="stat-num a" id="cnt-mid">—</div><div class="stat-lbl">MEDIUM</div></div>
     <div class="stat-item"><div class="stat-num r" id="cnt-low">—</div><div class="stat-lbl">Human review</div></div>
-    <div class="stat-item"><div class="stat-num" style="color:#aaa" id="cnt-total">—</div><div class="stat-lbl">Total findings</div></div>
+    <div class="stat-item"><div class="stat-num" style="color:#aaa" id="cnt-total">—</div><div class="stat-lbl">Total</div></div>
   </div>
 </div>
 
-<!-- Loading -->
 <div id="loading"><div class="spinner"></div></div>
 
-<!-- Main content -->
 <div id="main" style="display:none">
 
-  <!-- 01 Agent output -->
+  <!-- 01 Findings del agente -->
   <section>
     <div class="section-head"><span class="section-num">01</span><h2>Output del agente — Análisis CI automatizado</h2></div>
-    <div class="tab-bar" id="tab-bar"></div>
-    <div id="tab-panels"></div>
+    <div id="summary-box"></div>
+    <div id="findings-list"></div>
+    <div id="trace-section"></div>
   </section>
 
   <!-- 02 AMC -->
   <section>
-    <div class="section-head"><span class="section-num">02</span><h2>Matriz AMC — Competidores</h2></div>
-    <table class="amc-table">
-      <thead><tr><th>Competidor</th><th>Awareness</th><th>Motivation</th><th>Capability</th><th>Prob. respuesta</th><th>Timeline</th></tr></thead>
-      <tbody id="amc-body"></tbody>
-    </table>
+    <div class="section-head"><span class="section-num">02</span><h2>Matriz AMC — Generada por el agente</h2></div>
+    <div id="amc-container"></div>
   </section>
 
   <!-- 03 Scenarios -->
   <section>
-    <div class="section-head"><span class="section-num">03</span><h2>Escenarios (Shell Method 2×2)</h2></div>
-    <div class="matrix-wrap">
-      <div class="axis-y">Consolidación HPC</div>
-      <div class="matrix-right">
-        <div class="scenario-grid" id="scenario-grid"></div>
-        <div class="axis-x">← Adopción BEV Lenta &nbsp;·&nbsp; Adopción BEV Rápida →</div>
+    <div class="section-head"><span class="section-num">03</span><h2>Escenarios (Shell Method 2×2) — Generados por el agente</h2></div>
+    <div id="fin-container"></div>
+    <div style="margin-top:1.5rem">
+      <div class="matrix-wrap">
+        <div class="axis-y">Consolidación HPC</div>
+        <div class="matrix-right">
+          <div class="scenario-grid" id="scenario-grid"></div>
+          <div class="axis-x">← Adopción BEV Lenta &nbsp;·&nbsp; Adopción BEV Rápida →</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- 04 EWS -->
   <section>
-    <div class="section-head"><span class="section-num">04</span><h2>Early Warning System — KITs de alerta</h2></div>
-    <div id="ews-table"></div>
+    <div class="section-head"><span class="section-num">04</span><h2>Early Warning System — Generado por el agente</h2></div>
+    <div id="ews-container"></div>
   </section>
 
-</div><!-- /main -->
+</div>
 
 <footer>
   <div class="footer-brand">Repsol CI Co-Pilot</div>
-  <div class="footer-meta">Universidad Francisco de Vitoria · Grupo 5<br>Corporate Intelligence 2025-26 · TN10-TN12<br>Agente: Claude (Anthropic API) · ChromaDB RAG · GitHub Pages</div>
+  <div class="footer-meta">Universidad Francisco de Vitoria · Grupo 5<br>Corporate Intelligence 2025-26 · TN10-TN12<br>Powered by Google Gemini 1.5 Pro · Automatic Function Calling</div>
 </footer>
-
-</div><!-- /wrap -->
+</div>
 
 <script>
-// ── Static data (always shown) ────────────────────────────────────
-const AMC_DATA=[
-  {name:'Iberdrola',a:5,m:5,c:5,prob:95,timeline:'0-3 meses'},
-  {name:'Zunder (target)',a:4,m:3,c:4,prob:60,timeline:'6-18 meses'},
-  {name:'Cepsa / Moeve',a:4,m:4,c:3,prob:65,timeline:'3-9 meses'},
-  {name:'Endesa X-Way',a:4,m:3,c:3,prob:50,timeline:'3-9 meses'},
-];
-const SCENARIOS=[
-  {name:'🏆 Carrera del Oro',prob:'45%',action:'ADQUIRIR AHORA',cls:'best',acls:'go-now',desc:'BEV rápido + consolidación: ventana M&A cierra en 12 meses'},
-  {name:'🌪 Guerra de Desgaste',prob:'25%',action:'CONSTRUIR',cls:'ok',acls:'build',desc:'Adopción fuerte pero mercado fragmentado, guerra de precios kWh'},
-  {name:'🌱 Oasis Lento',prob:'20%',action:'JV / PARTNERSHIP',cls:'ok',acls:'jv',desc:'BEV lento (<15%) + pocos jugadores supervivientes por escala'},
-  {name:'🏜 Travesía del Desierto',prob:'10%',action:'NO ADQUIRIR',cls:'worst',acls:'wait',desc:'Estancamiento BEV + muchos operadores heridos + financiación seca'},
-];
-const EWS_DATA=[
-  {kit:'KIT-1',kitcls:'kit-1',indicator:'Nuevos puntos HPC Iberdrola-BP',source:'Electromaps + press',freq:'Semanal',threshold:'>50 pts/trimestre',action:'Acelerar proceso M&A'},
-  {kit:'KIT-1',kitcls:'kit-1',indicator:'Anuncios M&A Cepsa/Moeve',source:'CNMV + prensa',freq:'Diario',threshold:'Cualquier anuncio',action:'Revisión urgente del timeline'},
-  {kit:'KIT-2',kitcls:'kit-2',indicator:'Nuevo funding round Zunder',source:'Crunchbase + EIB',freq:'Mensual',threshold:'Cualquier evento',action:'Contacto inmediato con Mirova'},
-  {kit:'KIT-2',kitcls:'kit-2',indicator:'Vacantes C-level Zunder',source:'LinkedIn',freq:'Semanal',threshold:'Cualquier vacante',action:'Análisis señal de salida'},
-  {kit:'KIT-3',kitcls:'kit-3',indicator:'Revisión AFIR (600kW propuesta PE)',source:'EUR-Lex + MITECO',freq:'Trimestral',threshold:'Propuesta en trámite',action:'Recalcular NPV con re-CapEx'},
-  {kit:'KIT-3',kitcls:'kit-3',indicator:'Dotación PERTE VEC / MOVES III',source:'MITECO BOE',freq:'Trimestral',threshold:'Variación >±20%',action:'Ajustar modelo demanda BEV'},
-  {kit:'CROSS',kitcls:'kit-x',indicator:'Matriculaciones BEV España',source:'ANFAC mensual',freq:'Mensual',threshold:'<10% o >20%',action:'Revisar escenario base'},
-];
-
-// ── Helpers ───────────────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────────
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function fmtDate(iso){
   if(!iso)return'—';
-  try{return new Date(iso).toLocaleString('es-ES',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
-  catch{return iso}
+  try{return new Date(iso).toLocaleString('es-ES',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return iso}
 }
-function extractVerdict(analyses){
-  const text=(analyses||[]).map(a=>(a.answer||'').toUpperCase()).join(' ');
-  if(text.includes('CONDITIONAL GO')||text.includes('GO CONDICIONAL'))return{v:'CONDITIONAL GO',cls:'cond',sub:'Adquisición recomendada con condiciones — ver hedging actions'};
-  if(text.includes('NO-GO')||text.includes('NO GO'))return{v:'NO-GO',cls:'nogo',sub:'Adquisición no recomendada en condiciones actuales'};
-  if(text.match(/\bGO\b/))return{v:'GO',cls:'go',sub:'Adquisición recomendada — ventana de consolidación abierta'};
-  return{v:'—',cls:'pending',sub:'Sin veredicto explícito en el output del agente'};
-}
+function noData(msg){return`<div class="no-data">📭 ${msg||'Datos no disponibles — ejecuta el agente para generar este análisis'}</div>`}
 
-// ── Load last_run.json ────────────────────────────────────────────
+// ── Load JSON ─────────────────────────────────────────────────────
 async function loadData(){
   try{
     const r=await fetch('./last_run.json?t='+Date.now());
@@ -295,134 +261,180 @@ async function loadData(){
   }catch(e){return null}
 }
 
-// ── Render agent tabs ─────────────────────────────────────────────
-function renderAnalyses(analyses){
-  const bar=document.getElementById('tab-bar');
-  const panels=document.getElementById('tab-panels');
-  analyses.forEach((a,i)=>{
-    const btn=document.createElement('button');
-    btn.className='tab-btn'+(i===0?' active':'');
-    btn.textContent=a.label||('Análisis '+(i+1));
-    btn.onclick=()=>{
-      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('panel-'+i).classList.add('active');
-    };
-    bar.appendChild(btn);
+// ── Verdict ───────────────────────────────────────────────────────
+function verdictClass(v){
+  const u=(v||'').toUpperCase();
+  if(u.includes('CONDITIONAL')||u.includes('CONDICIONAL'))return'cond';
+  if(u.includes('NO-GO')||u.includes('NO GO'))return'nogo';
+  if(/\bGO\b/.test(u))return'go';
+  return'pending';
+}
 
-    const findings=a.findings||[];
-    const findingsHtml=findings.length
-      ? '<div class="findings-list">'+findings.map(f=>{
-          const conf=f.confidence||'LOW';
-          const srcs=(f.sources||[]).map(s=>s.startsWith('http')
-            ?`<a href="${esc(s)}" target="_blank" rel="noopener">${esc(s)}</a>`:esc(s)).join(' · ');
-          const unc=f.uncertainty?`<div class="finding-unc">⚡ ${esc(f.uncertainty)}</div>`:'';
-          const hitl=f.human_review?'<span class="hitl-badge">⚠ HUMAN-IN-THE-LOOP</span>':'';
-          return`<div class="finding-row">
-            <div class="conf-bar ${conf}">${conf}</div>
-            <div class="finding-content">
-              <div class="finding-claim">${esc(f.claim)}</div>
-              <div class="finding-sources">${srcs||'<em>sin fuente</em>'}</div>
-              ${unc}${hitl}
-            </div>
-          </div>`;
-        }).join('')+'</div>'
-      : '<div style="padding:1rem;color:var(--muted);font-family:var(--mono);font-size:.75rem">Sin findings estructurados en este análisis.</div>';
+// ── 01: Findings ──────────────────────────────────────────────────
+function renderFindings(analysis){
+  // Summary
+  if(analysis.summary){
+    document.getElementById('summary-box').innerHTML=
+      `<div class="summary-box">${esc(analysis.summary)}</div>`;
+  }
+  // Findings
+  const findings=analysis.findings||[];
+  if(!findings.length){
+    document.getElementById('findings-list').innerHTML=noData('Sin findings estructurados');
+    return;
+  }
+  document.getElementById('findings-list').innerHTML=findings.map(f=>{
+    const conf=f.confidence||'LOW';
+    const srcs=(f.sources||[]).map(s=>
+      String(s).startsWith('http')
+        ?`<a href="${esc(s)}" target="_blank" rel="noopener">${esc(s)}</a>`
+        :esc(s)
+    ).join(' · ');
+    const unc=f.uncertainty?`<div class="finding-unc">⚡ ${esc(f.uncertainty)}</div>`:'';
+    const hitl=f.human_review?'<span class="hitl-badge">⚠ HUMAN-IN-THE-LOOP</span>':'';
+    return`<div class="finding-row">
+      <div class="conf-bar ${conf}">${conf}</div>
+      <div class="finding-content">
+        <div class="finding-claim">${esc(f.claim)}</div>
+        <div class="finding-sources">${srcs||'<em>sin fuente</em>'}</div>
+        ${unc}${hitl}
+      </div>
+    </div>`;
+  }).join('');
 
-    const traceHtml=(a.trace||[]).map(t=>{
-      if(t.tool_call){
-        const ok=t.ok;
-        return`<div class="trace-entry"><span class="t-iter">[iter ${t.iteration}]</span> <span class="t-tool">🔧 ${t.tool_call}</span> (${JSON.stringify(t.input||{}).slice(0,70)}...) <span class="${ok?'t-ok':'t-fail'}">${ok?'✓ ok':'✗ error'}</span></div>`;
-      }
-      return`<div class="trace-entry"><span class="t-iter">[iter ${t.iteration}]</span> stop=${t.stop_reason} blocks=[${(t.blocks||[]).join(', ')}]</div>`;
+  // Trace
+  const trace=analysis.trace||[];
+  if(trace.length){
+    const traceHtml=trace.map(t=>{
+      if(t.tool_call)return`<div class="trace-entry"><span class="t-tool">🔧 ${t.tool_call}</span> (${JSON.stringify(t.args||{}).slice(0,80)}...) <span class="t-ok">→ llamado</span></div>`;
+      if(t.tool_response)return`<div class="trace-entry"><span class="t-ok">✓ respuesta: ${t.tool_response}</span></div>`;
+      return`<div class="trace-entry">${JSON.stringify(t).slice(0,120)}</div>`;
     }).join('');
-
-    const div=document.createElement('div');
-    div.className='tab-panel'+(i===0?' active':'');
-    div.id='panel-'+i;
-    div.innerHTML=`
-      <div class="analysis-box">
-        <div class="analysis-meta">
-          <span class="iter-badge">Iteraciones ReAct: ${a.iterations_used||'?'} / 8</span>
-          <span class="iter-badge">Findings: ${findings.length}</span>
-          <span class="iter-badge">${fmtDate(a.timestamp)}</span>
-        </div>
-        <div class="answer-text">${esc(a.answer||'Sin respuesta.')}</div>
-        ${findingsHtml}
-        <details>
-          <summary>Ver traza ReAct completa (${(a.trace||[]).length} pasos)</summary>
-          <div class="trace-body">${traceHtml||'<em>Sin traza</em>'}</div>
-        </details>
-      </div>`;
-    panels.appendChild(div);
-  });
+    document.getElementById('trace-section').innerHTML=`
+      <details>
+        <summary>Ver traza de tool calls (${trace.length} pasos)</summary>
+        <div class="trace-body">${traceHtml}</div>
+      </details>`;
+  }
 }
 
-// ── Render AMC ────────────────────────────────────────────────────
-function renderAMC(){
-  const sc=s=>s>=5?'score-5':s===4?'score-4':'score-3';
+// ── 02: AMC (dinámico desde dashboard_metrics) ────────────────────
+function renderAMC(dm){
+  const container=document.getElementById('amc-container');
+  const amc=(dm&&dm.amc_scores)||[];
+  if(!amc.length){container.innerHTML=noData();return}
+
+  const sc=s=>{
+    const n=Number(s);
+    if(n>=5)return'score-5';if(n===4)return'score-4';if(n===3)return'score-3';return'score-2';
+  };
   const pc=p=>p>=80?'#8b1a1a':p>=60?'#7a5c00':'#1a3a5c';
-  document.getElementById('amc-body').innerHTML=AMC_DATA.map(r=>`
-    <tr>
-      <td style="font-weight:500;font-family:var(--mono);font-size:.75rem">${r.name}</td>
-      <td><span class="score-pill ${sc(r.a)}">${r.a}/5</span></td>
-      <td><span class="score-pill ${sc(r.m)}">${r.m}/5</span></td>
-      <td><span class="score-pill ${sc(r.c)}">${r.c}/5</span></td>
-      <td><div class="prob-bar"><div class="bar-bg"><div class="bar-fill" style="width:${r.prob}%;background:${pc(r.prob)}"></div></div><span style="font-family:var(--mono);font-size:.65rem;min-width:34px">${r.prob}%</span></div></td>
-      <td style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">${r.timeline}</td>
-    </tr>`).join('');
+
+  container.innerHTML=`<table class="amc-table">
+    <thead><tr>
+      <th>Competidor</th><th>Awareness</th><th>Motivation</th><th>Capability</th>
+      <th>Prob. respuesta</th><th>Timeline</th><th>Respuesta esperada</th>
+    </tr></thead>
+    <tbody>${amc.map(r=>`<tr>
+      <td style="font-weight:500;font-family:var(--mono);font-size:.75rem">${esc(r.name||'')}</td>
+      <td><span class="score-pill ${sc(r.awareness)}">${r.awareness||'—'}/5</span></td>
+      <td><span class="score-pill ${sc(r.motivation)}">${r.motivation||'—'}/5</span></td>
+      <td><span class="score-pill ${sc(r.capability)}">${r.capability||'—'}/5</span></td>
+      <td><div class="prob-bar">
+        <div class="bar-bg"><div class="bar-fill" style="width:${r.response_probability||0}%;background:${pc(r.response_probability||0)}"></div></div>
+        <span style="font-family:var(--mono);font-size:.65rem;min-width:34px">${r.response_probability||'—'}%</span>
+      </div></td>
+      <td style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">${esc(r.timeline||'—')}</td>
+      <td style="font-size:.72rem;color:var(--muted)">${esc(r.most_likely_response||'—')}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
 }
 
-// ── Render Scenarios ──────────────────────────────────────────────
-function renderScenarios(){
-  document.getElementById('scenario-grid').innerHTML=SCENARIOS.map(s=>`
-    <div class="scenario-cell ${s.cls}">
-      <div class="sc-name">${s.name}</div>
-      <div class="sc-prob">Prob: ${s.prob}</div>
-      <span class="sc-action ${s.acls}">${s.action}</span>
-      <div class="sc-desc">${s.desc}</div>
-    </div>`).join('');
+// ── 03: Financial summary + Scenarios ────────────────────────────
+function renderScenarios(dm){
+  const container=document.getElementById('scenario-grid');
+  const finContainer=document.getElementById('fin-container');
+  const scenarios=(dm&&dm.scenarios)||[];
+
+  // Financial summary
+  const fin=(dm&&dm.financial_summary)||{};
+  if(Object.keys(fin).length){
+    finContainer.innerHTML=`<div class="fin-grid">
+      <div class="fin-card"><div class="fin-num">€${fin.ev_base_m||'—'}M</div><div class="fin-lbl">EV base Zunder</div></div>
+      <div class="fin-card"><div class="fin-num" style="color:${(fin.npv_expected_value_m||0)>=0?'var(--high)':'var(--low)'}">€${fin.npv_expected_value_m||'—'}M</div><div class="fin-lbl">NPV Expected Value</div></div>
+      <div class="fin-card"><div class="fin-num">€${fin.walk_away_price_m||'—'}M</div><div class="fin-lbl">Walk-away price</div></div>
+      <div class="fin-card"><div class="fin-num">${fin.wacc_pct||'—'}%</div><div class="fin-lbl">WACC Repsol</div></div>
+    </div>`;
+  }
+
+  if(!scenarios.length){container.innerHTML=noData();return}
+
+  // Assign cell class based on bev + consolidation axes
+  function cellClass(s){
+    const bev=(s.bev_axis||'').toLowerCase();
+    const con=(s.consolidation_axis||'').toLowerCase();
+    if(bev.includes('ápido')&&con.includes('onsolidado'))return'best';
+    if(bev.includes('ento')&&con.includes('ragmentado'))return'worst';
+    return'';
+  }
+  function actionClass(a){
+    const u=(a||'').toUpperCase();
+    if(u.includes('ADQUIRIR'))return'go-now';
+    if(u.includes('CONSTRUIR'))return'build';
+    if(u.includes('JV')||u.includes('PARTNERSHIP'))return'jv';
+    return'wait';
+  }
+
+  container.innerHTML=scenarios.slice(0,4).map(s=>{
+    const npv=s.npv_estimate_m;
+    const npvHtml=npv!=null
+      ?`<div class="sc-npv ${npv>=0?'pos':'neg'}">NPV: ${npv>=0?'+':''}€${npv}M</div>`
+      :'';
+    return`<div class="scenario-cell ${cellClass(s)}">
+      <div class="sc-name">${esc(s.name||'—')}</div>
+      <div class="sc-prob">Prob: ${s.probability||'?'}%</div>
+      <span class="sc-action ${actionClass(s.action)}">${esc(s.action||'—')}</span>
+      ${npvHtml}
+      <div class="sc-desc">${esc(s.description||'')}</div>
+    </div>`;
+  }).join('');
 }
 
-// ── Render EWS ───────────────────────────────────────────────────
-function renderEWS(){
-  document.getElementById('ews-table').innerHTML=`
+// ── 04: EWS (dinámico) ────────────────────────────────────────────
+function renderEWS(dm){
+  const container=document.getElementById('ews-container');
+  const ews=(dm&&dm.ews_alerts)||[];
+  if(!ews.length){container.innerHTML=noData();return}
+
+  const kitCls=k=>{
+    if(k==='KIT-1')return'kit-1';
+    if(k==='KIT-2')return'kit-2';
+    if(k==='KIT-3')return'kit-3';
+    return'kit-x';
+  };
+
+  container.innerHTML=`
     <div class="ews-row header">
       <div class="ews-cell">KIT / Indicador</div>
       <div class="ews-cell">Fuente · Umbral · Acción</div>
       <div class="ews-cell">Frecuencia</div>
       <div class="ews-cell">Responsable</div>
-    </div>`+EWS_DATA.map(r=>`
+    </div>`+ews.map(r=>`
     <div class="ews-row">
-      <div class="ews-cell"><span class="kit-tag ${r.kitcls}">${r.kit}</span><br><span style="font-size:.72rem">${r.indicator}</span></div>
+      <div class="ews-cell">
+        <span class="kit-tag ${kitCls(r.kit)}">${esc(r.kit||'KIT')}</span><br>
+        <span style="font-size:.72rem">${esc(r.indicator||'—')}</span>
+      </div>
       <div class="ews-cell" style="font-size:.72rem">
-        <span style="color:var(--muted);font-family:var(--mono);font-size:.58rem">${r.source}</span><br>
-        <span class="threshold-red">▲ ${r.threshold}</span><br>
-        <span style="color:var(--muted)">→ ${r.action}</span>
+        <span style="color:var(--muted);font-family:var(--mono);font-size:.58rem">
+          ${r.source_url?`<a href="${esc(r.source_url)}" target="_blank" rel="noopener">${esc(r.source_url.replace('https://','').slice(0,40))}...</a>`:'—'}
+        </span><br>
+        <span class="threshold-red">▲ ${esc(r.threshold||'—')}</span><br>
+        <span style="color:var(--muted)">→ ${esc(r.action||'—')}</span>
       </div>
-      <div class="ews-cell"><span class="freq-badge">${r.freq}</span></div>
-      <div class="ews-cell" style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">CI Analyst</div>
+      <div class="ews-cell"><span class="freq-badge">${esc(r.frequency||'—')}</span></div>
+      <div class="ews-cell" style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">${esc(r.owner||'CI Analyst')}</div>
     </div>`).join('');
-}
-
-// ── Empty state ───────────────────────────────────────────────────
-function renderEmpty(){
-  document.getElementById('loading').style.display='none';
-  document.getElementById('main').style.display='block';
-  document.getElementById('tab-panels').innerHTML=`
-    <div class="empty-state">
-      <div class="empty-title">El agente aún no ha generado resultados</div>
-      <p style="color:var(--muted);font-size:.82rem">Ejecuta el notebook en Google Colab y sube el output al repositorio.</p>
-      <div class="empty-code">
-        1. Abre repsol_ci_agent.ipynb en Google Colab<br>
-        2. Ejecuta todas las celdas en orden<br>
-        3. Descarga output/last_run.json (Celda 6)<br>
-        4. Súbelo a tu repo: output/last_run.json<br>
-        5. git push → este dashboard se actualiza
-      </div>
-    </div>`;
-  renderAMC();renderScenarios();renderEWS();
 }
 
 // ── Init ──────────────────────────────────────────────────────────
@@ -431,34 +443,55 @@ async function init(){
   document.getElementById('loading').style.display='none';
 
   if(!data||!data.analyses||!data.analyses.length){
-    renderEmpty();return;
+    document.getElementById('main').style.display='block';
+    document.getElementById('findings-list').innerHTML=`
+      <div class="empty-state">
+        <div class="empty-title">El agente aún no ha generado resultados</div>
+        <p style="color:var(--muted);font-size:.82rem">Ejecuta el notebook en Google Colab y sube el output al repositorio.</p>
+        <div class="empty-code">
+          1. Abre gemini_agent.ipynb en Google Colab<br>
+          2. Ejecuta todas las celdas en orden<br>
+          3. Descarga output/last_run.json (Celda 5)<br>
+          4. Súbelo a GitHub: docs/last_run.json<br>
+          5. git push → este dashboard se actualiza
+        </div>
+      </div>`;
+    document.getElementById('amc-container').innerHTML=noData();
+    document.getElementById('scenario-grid').innerHTML=noData();
+    document.getElementById('ews-container').innerHTML=noData();
+    return;
   }
 
   document.getElementById('main').style.display='block';
 
+  const analysis=data.analyses[0];
+  const dm=data.dashboard_metrics||analysis.dashboard_metrics||{};
+  const s=data.summary||{};
+
   // Meta
   document.getElementById('meta-date').textContent=fmtDate(data.generated_at);
   document.getElementById('meta-model').textContent=data.model||'—';
-  document.getElementById('meta-analyses').textContent=data.analyses.length;
+  document.getElementById('meta-tools').textContent=analysis.tool_calls_count!=null?analysis.tool_calls_count+'':'—';
 
   // Verdict
-  const {v,cls,sub}=extractVerdict(data.analyses);
-  document.getElementById('verdict-val').textContent=v;
-  document.getElementById('verdict-val').className='verdict-value '+cls;
-  document.getElementById('verdict-sub').textContent=sub;
+  const verdict=s.verdict||analysis.verdict||'—';
+  const vEl=document.getElementById('verdict-val');
+  vEl.textContent=verdict;
+  vEl.className='verdict-value '+verdictClass(verdict);
+  document.getElementById('verdict-sub').textContent=
+    analysis.summary?analysis.summary.slice(0,120)+'...':'Análisis completado por el agente';
 
   // Stats
-  const s=data.summary||{};
   document.getElementById('cnt-total').textContent=s.total_findings??'—';
   document.getElementById('cnt-high').textContent=s.high_confidence??'—';
   document.getElementById('cnt-mid').textContent=s.medium_confidence??'—';
   document.getElementById('cnt-low').textContent=s.low_confidence_human_review??'—';
 
-  // Analyses
-  renderAnalyses(data.analyses);
-
-  // Static
-  renderAMC();renderScenarios();renderEWS();
+  // Sections
+  renderFindings(analysis);
+  renderAMC(dm);
+  renderScenarios(dm);
+  renderEWS(dm);
 }
 
 init();
