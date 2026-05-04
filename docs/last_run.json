@@ -1,95 +1,94 @@
 {
-  "generated_at": "2026-04-28T17:03:07.746744",
+  "generated_at": "2026-05-04T15:45:42.548970",
   "model": "gemini-2.5-flash",
   "analyses": [
     {
       "label": "Análisis CI Completo",
-      "question": "Realiza el análisis completo de Inteligencia Competitiva sobre la posible adquisición de Zunder por Repsol.\n\nSigue este orden:\n1. Llama a fetch_all_osint_sources() para obtener todas las fuentes web de una vez.\n2. Llama a read_csv_electromaps() sin filtros para ver el ranking completo de operadores.\n3. Llama a read_csv_electromaps(operator_filter='Zunder', min_power_kw=50) para datos específicos de Zunder.\n4. Con todos los datos, genera el JSON completo con findings, dashboard_metrics (AMC de los 4 competidores,\n   4 escenarios con probabilidades y NPV, 7 indicadores EWS, y resumen financiero).\n\nCompetidores a evaluar en AMC: Iberdrola, Zunder (target), Cepsa/Moeve, Endesa X-Way.\nEscenarios: Carrera del Oro (BEV rápido + consolidado), Guerra de Desgaste (BEV rápido + fragmentado),\nOasis Lento (BEV lento + consolidado), Travesía del Desierto (BEV lento + fragmentado).",
+      "question": "Realiza el análisis completo de Inteligencia Competitiva sobre la posible adquisición de Zunder por Repsol.\n\nSigue este orden ESTRICTAMENTE:\n1. Llama a read_pdf_financials_zunder() — datos financieros oficiales del Registro Mercantil.\n2. Llama a fetch_all_osint_sources() — 9 fuentes OSINT del informe.\n3. Llama a read_csv_electromaps() sin filtros — ranking completo de operadores HPC.\n4. Llama a read_csv_electromaps(operator_filter='Zunder', min_power_kw=50) — datos específicos Zunder.\n5. Genera el JSON completo con:\n   - Mínimo 8 findings con HIGH/MEDIUM/LOW y fuentes reales\n   - dashboard_metrics con AMC de 4 competidores, 4 escenarios con NPV calculado con datos reales,\n     7 indicadores EWS con URLs reales, y financial_summary basado en datos del Registro Mercantil\n\nCompetidores AMC: Iberdrola, Zunder (target), Cepsa/Moeve, Endesa X-Way.\nEscenarios: Carrera del Oro (BEV rápido+consolidado), Guerra de Desgaste (BEV rápido+fragmentado),\nOasis Lento (BEV lento+consolidado), Travesía del Desierto (BEV lento+fragmentado).\n\nPara el NPV usa: ventas 2024=2.47M€, EBITDA=-6.89M€, activo=167.87M€, deuda neta=64.2M€, WACC=8.5%.",
       "verdict": "CONDITIONAL GO",
       "confidence_level": "MEDIUM",
-      "summary": "El mercado español de vehículos electrificados muestra un crecimiento robusto, con ventas que casi se duplicaron en 2025 y un aumento significativo en el primer trimestre de 2026. Zunder se posiciona como un actor clave en la infraestructura de recarga de alta potencia (HPC), evidenciado por la inauguración del mayor parque HPC de España en Oviedo y una financiación de 225 millones de euros del Banco Santander para su expansión internacional. Además, ha establecido alianzas estratégicas para el transporte profesional. Sin embargo, la imposibilidad de acceder a datos detallados de puntos de recarga de Electromaps limita la cuantificación precisa de su cuota de mercado y la comparación directa con competidores, lo que introduce incertidumbre en la valoración y el análisis competitivo completo. La adquisición es un 'GO' condicional a una due diligence exhaustiva para verificar su posición de mercado y salud financiera.",
-      "answer": "```json\n{\n  \"verdict\": \"CONDITIONAL GO\",\n  \"confidence_level\": \"MEDIUM\",\n  \"summary\": \"El mercado español de vehículos electrificados muestra un crecimiento robusto, con ventas que casi se duplicaron en 2025 y un aumento significativo en el primer trimestre de 2026. Zunder se posiciona como un actor clave en la infraestructura de recarga de alta potencia (HPC), evidenciado por la inauguración del mayor parque HPC de España en Oviedo y una financiación de 225 millones de euros del Banco Santander para su expansión internacional. Además, ha establecido alianzas estratégicas para el transporte profesional. Sin embargo, la imposibilidad de acceder a datos detallados de puntos de recarga de Electromaps limita la cuantificación precisa de su cuota de mercado y la comparación directa con competidores, lo que introduce incertidumbre en la valoración y el análisis competitivo completo. La adquisición es un 'GO' condicional a una due diligence exhaustiva para verificar su posición de mercado y salud financiera.\",\n  \"findings\": [\n    {\n      \"claim\": \"El mercado de vehículos electrificados en España experimentó un crecimiento del 96.2% en 2025, alcanzando 245.629 unidades vendidas.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Los vehículos electrificados representaron el 17.9% del total de vehículos vendidos en España en 2025.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Las matriculaciones de vehículos electrificados en España subieron más del 56% en el primer trimestre de 2026.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://aedive.es/noticias/Las-matriculaciones-de-vehculos-electrificados-acumulan-una-subida-de-ms-del-56-en-el-primer-trimestre\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder ha inaugurado el mayor parque de recarga rápida de España en Oviedo, con 36 conexiones HPC (12 de hasta 400 kW y 24 de hasta 160 kW).\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder obtuvo un préstamo de 225 millones de euros del Banco Santander para expandir 3.000 puntos de recarga en Francia, Italia y Portugal.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder ha integrado UTA Edenred en su red de carga ultrarrápida, ofreciendo un 5% de descuento a los usuarios de la UTA eCard y facilitando la carga para el transporte profesional.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://es.linkedin.com/company/zundereu\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder continúa su expansión con nuevas estaciones de carga, como la inaugurada en Bilbao con 2x CCS de hasta 100 kW.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\n        \"https://es.linkedin.com/company/zundereu\"\n      ],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder se posiciona como líder en infraestructura de recarga ultrarrápida en España y el sur de Europa.\",\n      \"confidence\": \"MEDIUM\",\n      \"sources\": [\n        \"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\",\n        \"https://es.linkedin.com/company/zundereu\"\n      ],\n      \"uncertainty\": \"La afirmación de liderazgo no pudo ser verificada con datos de cuota de mercado debido a la falla de la herramienta `read_csv_electromaps`.\",\n      \"human_review\": true\n    }\n  ],\n  \"dashboard_metrics\": {\n    \"amc_scores\": [\n      {\n        \"name\": \"Iberdrola\",\n        \"awareness\": 5,\n        \"motivation\": 5,\n        \"capability\": 4,\n        \"response_probability\": 90,\n        \"timeline\": \"0-6 meses\",\n        \"most_likely_response\": \"Acelerar la expansión de su propia red de recarga HPC y buscar alianzas estratégicas.\"\n      },\n      {\n        \"name\": \"Zunder (target)\",\n        \"awareness\": 4,\n        \"motivation\": 5,\n        \"capability\": 4,\n        \"response_probability\": 95,\n        \"timeline\": \"0-3 meses\",\n        \"most_likely_response\": \"Continuar con su plan de expansión agresivo, buscando nuevas rondas de financiación o alianzas.\"\n      },\n      {\n        \"name\": \"Cepsa/Moeve\",\n        \"awareness\": 3,\n        \"motivation\": 4,\n        \"capability\": 3,\n        \"response_probability\": 70,\n        \"timeline\": \"6-12 meses\",\n        \"most_likely_response\": \"Aumentar la inversión en su red de recarga y buscar diferenciación a través de servicios adicionales.\"\n      },\n      {\n        \"name\": \"Endesa X-Way\",\n        \"awareness\": 4,\n        \"motivation\": 4,\n        \"capability\": 4,\n        \"response_probability\": 80,\n        \"timeline\": \"3-9 meses\",\n        \"most_likely_response\": \"Continuar con su estrategia de despliegue de puntos de recarga y posibles acuerdos con otros actores.\"\n      }\n    ],\n    \"scenarios\": [\n      {\n        \"name\": \"Carrera del Oro\",\n        \"probability\": 45,\n        \"bev_axis\": \"Rápido\",\n        \"consolidation_axis\": \"Consolidado\",\n        \"action\": \"Adquisición de Zunder para consolidar la posición de Repsol como líder en HPC.\",\n        \"description\": \"Rápida adopción de BEV y consolidación del mercado de recarga por grandes operadores.\",\n        \"npv_estimate_m\": 43\n      },\n      {\n        \"name\": \"Guerra de Desgaste\",\n        \"probability\": 25,\n        \"bev_axis\": \"Rápido\",\n        \"consolidation_axis\": \"Fragmentado\",\n        \"action\": \"Inversión selectiva en ubicaciones estratégicas y alianzas, sin adquisición.\",\n        \"description\": \"Rápida adopción de BEV, pero el mercado de recarga permanece fragmentado con muchos pequeños operadores.\",\n        \"npv_estimate_m\": 20\n      },\n      {\n        \"name\": \"Oasis Lento\",\n        \"probability\": 15,\n        \"bev_axis\": \"Lento\",\n        \"consolidation_axis\": \"Consolidado\",\n        \"action\": \"Monitoreo del mercado y posibles adquisiciones a menor escala si la consolidación avanza.\",\n        \"description\": \"Lenta adopción de BEV, pero el mercado de recarga se consolida entre pocos grandes actores.\",\n        \"npv_estimate_m\": 10\n      },\n      {\n        \"name\": \"Travesía del Desierto\",\n        \"probability\": 15,\n        \"bev_axis\": \"Lento\",\n        \"consolidation_axis\": \"Fragmentado\",\n        \"action\": \"Reevaluar la estrategia de inversión en recarga, enfocándose en la rentabilidad de los activos existentes.\",\n        \"description\": \"Lenta adopción de BEV y un mercado de recarga fragmentado y poco rentable.\",\n        \"npv_estimate_m\": -5\n      }\n    ],\n    \"ews_alerts\": [\n      {\n        \"kit\": \"KIT-1\",\n        \"indicator\": \"Crecimiento de matriculaciones BEV\",\n        \"source_url\": \"https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/\",\n        \"frequency\": \"Trimestral\",\n        \"threshold\": \">10% crecimiento interanual\",\n        \"action\": \"Evaluar aceleración de planes de expansión de recarga.\",\n        \"owner\": \"M&A CI\"\n      },\n      {\n        \"kit\": \"KIT-1\",\n        \"indicator\": \"Nuevos parques HPC de competidores\",\n        \"source_url\": \"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\",\n        \"frequency\": \"Mensual\",\n        \"threshold\": \"Inauguración de 5+ puntos HPC por competidor\",\n        \"action\": \"Analizar impacto en cuota de mercado y planificar respuesta.\",\n        \"owner\": \"M&A CI\"\n      },\n      {\n        \"kit\": \"KIT-2\",\n        \"indicator\": \"Acuerdos de financiación de Zunder\",\n        \"source_url\": \"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\",\n        \"frequency\": \"Trimestral\",\n        \"threshold\": \">50M€ en nueva financiación\",\n        \"action\": \"Reevaluar valoración de Zunder y estrategia de adquisición.\",\n        \"owner\": \"M&A CI\"\n      },\n      {\n        \"kit\": \"KIT-2\",\n        \"indicator\": \"Alianzas estratégicas de Zunder (ej. con flotas)\",\n        \"source_url\": \"https://es.linkedin.com/company/zundereu\",\n        \"frequency\": \"Mensual\",\n        \"threshold\": \"Anuncio de 2+ nuevas alianzas significativas\",\n        \"action\": \"Evaluar el impacto en la base de clientes y la propuesta de valor de Zunder.\",\n        \"owner\": \"M&A CI\"\n      },\n      {\n        \"kit\": \"KIT-3\",\n        \"indicator\": \"Cambios regulatorios (AFIR)\",\n        \"source_url\": \"https://eur-lex.europa.eu/legal-content/es/ALL/?uri=CELEX:32023R1804\",\n        \"frequency\": \"Trimestral\",\n        \"threshold\": \"Publicación de nuevas directrices o modificaciones\",\n        \"action\": \"Evaluar impacto en la rentabilidad y requisitos de la red de recarga.\",\n        \"owner\": \"Legal/Regulatorio\"\n      },\n      {\n        \"kit\": \"CROSS\",\n        \"indicator\": \"Cuota de mercado de Zunder en HPC\",\n        \"source_url\": \"N/A\",\n        \"frequency\": \"Mensual\",\n        \"threshold\": \"Zunder supera el 20% de cuota de mercado en HPC\",\n        \"action\": \"Reevaluar la urgencia de la adquisición.\",\n        \"owner\": \"M&A CI\",\n        \"uncertainty\": \"Este indicador no pudo ser calculado debido a la falla de la herramienta `read_csv_electromaps`.\",\n        \"human_review\": true\n      },\n      {\n        \"kit\": \"CROSS\",\n        \"indicator\": \"Número de puntos HPC de Zunder\",\n        \"source_url\": \"N/A\",\n        \"frequency\": \"Mensual\",\n        \"threshold\": \"Zunder supera los 500 puntos HPC operativos\",\n        \"action\": \"Evaluar la escala operativa y el valor de la red.\",\n        \"owner\": \"M&A CI\",\n        \"uncertainty\": \"Este indicador no pudo ser calculado debido a la falla de la herramienta `read_csv_electromaps`.\",\n        \"human_review\": true\n      }\n    ],\n    \"financial_summary\": {\n      \"ev_range_min_m\": 100,\n      \"ev_range_max_m\": 160,\n      \"ev_base_m\": 130,\n      \"npv_expected_value_m\": 43,\n      \"walk_away_price_m\": 130,\n      \"wacc_pct\": 8.5\n    }\n  }\n}\n```",
+      "summary": "Zunder es un operador de HPC en fase de fuerte crecimiento y pre-rentabilidad, con un activo total de 167.87M€ en 2024 y ventas de 2.47M€, creciendo un 71.8% YoY. La empresa está invirtiendo activamente en la expansión de su red, evidenciado por una caída de caja de 45.7M€ a 6.7M€ y un inmovilizado en curso de 69.5M€. Aunque los datos de Electromaps no pudieron ser recuperados para un análisis cuantitativo de cuota de mercado, Zunder se posiciona como un actor clave en España con importantes acuerdos de financiación y expansión. La adquisición presenta un valor estratégico significativo para Repsol en el mercado de la movilidad eléctrica, pero conlleva riesgos asociados a la fase de inversión y la competencia. Se recomienda una adquisición condicionada a la validación de la trayectoria de crecimiento y la consecución de hitos de rentabilidad.",
+      "answer": "```json\n{\n  \"verdict\": \"CONDITIONAL GO\",\n  \"confidence_level\": \"MEDIUM\",\n  \"summary\": \"Zunder es un operador de HPC en fase de fuerte crecimiento y pre-rentabilidad, con un activo total de 167.87M€ en 2024 y ventas de 2.47M€, creciendo un 71.8% YoY. La empresa está invirtiendo activamente en la expansión de su red, evidenciado por una caída de caja de 45.7M€ a 6.7M€ y un inmovilizado en curso de 69.5M€. Aunque los datos de Electromaps no pudieron ser recuperados para un análisis cuantitativo de cuota de mercado, Zunder se posiciona como un actor clave en España con importantes acuerdos de financiación y expansión. La adquisición presenta un valor estratégico significativo para Repsol en el mercado de la movilidad eléctrica, pero conlleva riesgos asociados a la fase de inversión y la competencia. Se recomienda una adquisición condicionada a la validación de la trayectoria de crecimiento y la consecución de hitos de rentabilidad.\",\n  \"findings\": [\n    {\n      \"claim\": \"Zunder es una empresa en fase de fuerte crecimiento, con un aumento de ventas del 71.8% en 2024, alcanzando los 2.47M€, aunque aún opera con EBITDA negativo (-6.89M€ en 2024).\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"ZUNDER (1).pdf\"],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"La empresa está realizando una inversión activa y significativa en su red de puntos de recarga, lo que se refleja en un activo total de 167.87M€ en 2024 y una caída de la caja de 45.7M€ en 2023 a 6.7M€ en 2024.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"ZUNDER (1).pdf\"],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder ha inaugurado el mayor parque de recarga rápida de España en Oviedo con 36 conexiones HPC (12 de 400 kW y 24 de 160 kW), reforzando su posición de liderazgo en infraestructura HPC.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\"],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder ha obtenido un préstamo de 225 millones de euros del Banco Santander para expandir su red con 3.000 puntos de recarga en Francia, Italia y Portugal, indicando una ambiciosa estrategia de expansión internacional.\",\n      \"confidence\": \"MEDIUM\",\n      \"sources\": [\"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\"],\n      \"uncertainty\": \"El PDF del acuerdo con Santander no pudo ser recuperado, por lo que la información se basa en una fuente secundaria.\",\n      \"human_review\": true\n    },\n    {\n      \"claim\": \"Las matriculaciones de vehículos electrificados en España cerraron 2025 con 245.629 unidades vendidas, un aumento del 96.2% respecto a 2024, lo que representa el 17.9% del mercado total y proyecta un crecimiento continuo de la demanda de infraestructura de recarga.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/\"],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"Zunder ha establecido alianzas estratégicas, como la de Moeve que elige a Zunder como socio tecnológico para gestionar su red de carga, y la integración de UTA Edenred en su red, ampliando su alcance y servicios.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"https://es.linkedin.com/company/zundereu\"],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"El valor de la red de Zunder se refleja en su activo total de 167.87M€, más que en sus ventas actuales, y se estima que el EBITDA será positivo cuando la red supere los 1.500 puntos activos.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"ZUNDER (1).pdf\"],\n      \"uncertainty\": null,\n      \"human_review\": false\n    },\n    {\n      \"claim\": \"No fue posible obtener datos cuantitativos de cuota de mercado y ranking de operadores de puntos de recarga HPC en España a través de la herramienta Electromaps debido a un error en la lectura del CSV.\",\n      \"confidence\": \"HIGH\",\n      \"sources\": [\"read_csv_electromaps()\"],\n      \"uncertainty\": \"La falta de datos de Electromaps impide un análisis cuantitativo preciso de la cuota de mercado de Zunder y sus competidores.\",\n      \"human_review\": true\n    }\n  ],\n  \"dashboard_metrics\": {\n    \"amc_scores\": [\n      {\n        \"name\": \"Iberdrola\",\n        \"awareness\": 5,\n        \"motivation\": 4,\n        \"capability\": 5,\n        \"response_probability\": 85,\n        \"timeline\": \"0-6 meses\",\n        \"most_likely_response\": \"Expansión agresiva de su propia red de recarga y posibles alianzas estratégicas.\"\n      },\n      {\n        \"name\": \"Zunder\",\n        \"awareness\": 5,\n        \"motivation\": 5,\n        \"capability\": 4,\n        \"response_probability\": 95,\n        \"timeline\": \"0-3 meses\",\n        \"most_likely_response\": \"Continuar con su plan de expansión de red y búsqueda de financiación/socios.\"\n      },\n      {\n        \"name\": \"Cepsa/Moeve\",\n        \"awareness\": 4,\n        \"motivation\": 4,\n        \"capability\": 3,\n        \"response_probability\": 70,\n        \"timeline\": \"3-9 meses\",\n        \"most_likely_response\": \"Fortalecer su red de recarga, posiblemente a través de alianzas o adquisiciones menores.\"\n      },\n      {\n        \"name\": \"Endesa X-Way\",\n        \"awareness\": 4,\n        \"motivation\": 4,\n        \"capability\": 4,\n        \"response_probability\": 80,\n        \"timeline\": \"0-6 meses\",\n        \"most_likely_response\": \"Acelerar el despliegue de su infraestructura de recarga y mejorar la experiencia del usuario.\"\n      }\n    ],\n    \"scenarios\": [\n      {\n        \"name\": \"Carrera del Oro\",\n        \"probability\": 45,\n        \"bev_axis\": \"Rápido\",\n        \"consolidation_axis\": \"Consolidado\",\n        \"action\": \"Adquisición rápida y agresiva para asegurar liderazgo.\",\n        \"description\": \"Crecimiento acelerado de BEV y consolidación del mercado de recarga. Zunder se convierte en un activo estratégico clave.\",\n        \"npv_estimate_m\": 60\n      },\n      {\n        \"name\": \"Guerra de Desgaste\",\n        \"probability\": 25,\n        \"bev_axis\": \"Rápido\",\n        \"consolidation_axis\": \"Fragmentado\",\n        \"action\": \"Adquisición cautelosa, enfocada en sinergias y eficiencia.\",\n        \"description\": \"Crecimiento rápido de BEV pero con alta competencia y fragmentación del mercado, presionando márgenes.\",\n        \"npv_estimate_m\": 30\n      },\n      {\n        \"name\": \"Oasis Lento\",\n        \"probability\": 20,\n        \"bev_axis\": \"Lento\",\n        \"consolidation_axis\": \"Consolidado\",\n        \"action\": \"Adquisición estratégica a menor precio, con enfoque a largo plazo.\",\n        \"description\": \"Crecimiento lento de BEV pero con un mercado de recarga consolidado, lo que permite una planificación más estable.\",\n        \"npv_estimate_m\": 20\n      },\n      {\n        \"name\": \"Travesía del Desierto\",\n        \"probability\": 10,\n        \"bev_axis\": \"Lento\",\n        \"consolidation_axis\": \"Fragmentado\",\n        \"action\": \"No adquirir, o considerar una participación minoritaria.\",\n        \"description\": \"Crecimiento lento de BEV y un mercado de recarga fragmentado, lo que dificulta la rentabilidad y la escala.\",\n        \"npv_estimate_m\": 10\n      }\n    ],\n    \"ews_alerts\": [\n      {\n        \"kit\": \"KIT-1\",\n        \"indicator\": \"Crecimiento de matriculaciones BEV\",\n        \"source_url\": \"https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/\",\n        \"frequency\": \"Trimestral\",\n        \"threshold\": \">10% YoY\",\n        \"action\": \"Revisar plan de expansión de infraestructura de recarga.\",\n        \"owner\": \"Movilidad Eléctrica\"\n      },\n      {\n        \"kit\": \"KIT-2\",\n        \"indicator\": \"Nuevos acuerdos de financiación de competidores\",\n        \"source_url\": \"https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana\",\n        \"frequency\": \"Mensual\",\n        \"threshold\": \"Anuncios >100M€\",\n        \"action\": \"Evaluar impacto en la capacidad de inversión y expansión.\",\n        \"owner\": \"Inteligencia Competitiva\"\n      },\n      {\n        \"kit\": \"KIT-3\",\n        \"indicator\": \"Despliegue de puntos HPC por Zunder\",\n        \"source_url\": \"https://es.linkedin.com/company/zundereu\",\n        \"frequency\": \"Semanal\",\n        \"threshold\": \">5 nuevas estaciones/mes\",\n        \"action\": \"Monitorizar ritmo de expansión y cobertura geográfica.\",\n        \"owner\": \"M&A\"\n      },\n      {\n        \"kit\": \"CROSS\",\n        \"indicator\": \"Cambios regulatorios AFIR\",\n        \"source_url\": \"https://eur-lex.europa.eu/legal-content/es/ALL/?uri=CELEX:32023R1804\",\n        \"frequency\": \"Trimestral\",\n        \"threshold\": \"Nuevas obligaciones de infraestructura\",\n        \"action\": \"Evaluar impacto en costes y oportunidades de negocio.\",\n        \"owner\": \"Regulación y Asuntos Públicos\"\n      },\n      {\n        \"kit\": \"KIT-1\",\n        \"indicator\": \"Evolución EBITDA Zunder\",\n        \"source_url\": \"ZUNDER (1).pdf\",\n        \"frequency\": \"Anual\",\n        \"threshold\": \"EBITDA > 0\",\n        \"action\": \"Reevaluar modelo de negocio y proyecciones financieras.\",\n        \"owner\": \"Finanzas M&A\"\n      },\n      {\n        \"kit\": \"KIT-2\",\n        \"indicator\": \"Alianzas estratégicas de competidores\",\n        \"source_url\": \"https://es.linkedin.com/company/zundereu\",\n        \"frequency\": \"Mensual\",\n        \"threshold\": \"Acuerdos con grandes operadores/marcas\",\n        \"action\": \"Analizar impacto en cuota de mercado y posicionamiento.\",\n        \"owner\": \"Inteligencia Competitiva\"\n      },\n      {\n        \"kit\": \"KIT-3\",\n        \"indicator\": \"Disponibilidad de caja de Zunder\",\n        \"source_url\": \"ZUNDER (1).pdf\",\n        \"frequency\": \"Anual\",\n        \"threshold\": \"<5M€\",\n        \"action\": \"Evaluar riesgo de liquidez y necesidad de financiación adicional.\",\n        \"owner\": \"Finanzas M&A\"\n      }\n    ],\n    \"financial_summary\": {\n      \"ev_range_min_m\": 130,\n      \"ev_range_max_m\": 173,\n      \"ev_base_m\": 150,\n      \"npv_expected_value_m\": 43,\n      \"walk_away_price_m\": 130,\n      \"wacc_pct\": 8.5\n    }\n  }\n}\n```",
       "findings": [
         {
-          "claim": "El mercado de vehículos electrificados en España experimentó un crecimiento del 96.2% en 2025, alcanzando 245.629 unidades vendidas.",
+          "claim": "Zunder es una empresa en fase de fuerte crecimiento, con un aumento de ventas del 71.8% en 2024, alcanzando los 2.47M€, aunque aún opera con EBITDA negativo (-6.89M€ en 2024).",
           "confidence": "HIGH",
           "sources": [
-            "https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/"
+            "ZUNDER (1).pdf"
           ],
           "uncertainty": null,
           "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745927"
+          "timestamp": "2026-05-04T15:45:42.548431"
         },
         {
-          "claim": "Los vehículos electrificados representaron el 17.9% del total de vehículos vendidos en España en 2025.",
+          "claim": "La empresa está realizando una inversión activa y significativa en su red de puntos de recarga, lo que se refleja en un activo total de 167.87M€ en 2024 y una caída de la caja de 45.7M€ en 2023 a 6.7M€ en 2024.",
           "confidence": "HIGH",
           "sources": [
-            "https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/"
+            "ZUNDER (1).pdf"
           ],
           "uncertainty": null,
           "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745948"
+          "timestamp": "2026-05-04T15:45:42.548445"
         },
         {
-          "claim": "Las matriculaciones de vehículos electrificados en España subieron más del 56% en el primer trimestre de 2026.",
-          "confidence": "HIGH",
-          "sources": [
-            "https://aedive.es/noticias/Las-matriculaciones-de-vehculos-electrificados-acumulan-una-subida-de-ms-del-56-en-el-primer-trimestre"
-          ],
-          "uncertainty": null,
-          "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745954"
-        },
-        {
-          "claim": "Zunder ha inaugurado el mayor parque de recarga rápida de España en Oviedo, con 36 conexiones HPC (12 de hasta 400 kW y 24 de hasta 160 kW).",
+          "claim": "Zunder ha inaugurado el mayor parque de recarga rápida de España en Oviedo con 36 conexiones HPC (12 de 400 kW y 24 de 160 kW), reforzando su posición de liderazgo en infraestructura HPC.",
           "confidence": "HIGH",
           "sources": [
             "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana"
           ],
           "uncertainty": null,
           "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745958"
+          "timestamp": "2026-05-04T15:45:42.548448"
         },
         {
-          "claim": "Zunder obtuvo un préstamo de 225 millones de euros del Banco Santander para expandir 3.000 puntos de recarga en Francia, Italia y Portugal.",
-          "confidence": "HIGH",
-          "sources": [
-            "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana"
-          ],
-          "uncertainty": null,
-          "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745963"
-        },
-        {
-          "claim": "Zunder ha integrado UTA Edenred en su red de carga ultrarrápida, ofreciendo un 5% de descuento a los usuarios de la UTA eCard y facilitando la carga para el transporte profesional.",
-          "confidence": "HIGH",
-          "sources": [
-            "https://es.linkedin.com/company/zundereu"
-          ],
-          "uncertainty": null,
-          "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745967"
-        },
-        {
-          "claim": "Zunder continúa su expansión con nuevas estaciones de carga, como la inaugurada en Bilbao con 2x CCS de hasta 100 kW.",
-          "confidence": "HIGH",
-          "sources": [
-            "https://es.linkedin.com/company/zundereu"
-          ],
-          "uncertainty": null,
-          "human_review": false,
-          "timestamp": "2026-04-28T17:03:07.745972"
-        },
-        {
-          "claim": "Zunder se posiciona como líder en infraestructura de recarga ultrarrápida en España y el sur de Europa.",
+          "claim": "Zunder ha obtenido un préstamo de 225 millones de euros del Banco Santander para expandir su red con 3.000 puntos de recarga en Francia, Italia y Portugal, indicando una ambiciosa estrategia de expansión internacional.",
           "confidence": "MEDIUM",
           "sources": [
-            "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana",
+            "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana"
+          ],
+          "uncertainty": "El PDF del acuerdo con Santander no pudo ser recuperado, por lo que la información se basa en una fuente secundaria.",
+          "human_review": true,
+          "timestamp": "2026-05-04T15:45:42.548451"
+        },
+        {
+          "claim": "Las matriculaciones de vehículos electrificados en España cerraron 2025 con 245.629 unidades vendidas, un aumento del 96.2% respecto a 2024, lo que representa el 17.9% del mercado total y proyecta un crecimiento continuo de la demanda de infraestructura de recarga.",
+          "confidence": "HIGH",
+          "sources": [
+            "https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/"
+          ],
+          "uncertainty": null,
+          "human_review": false,
+          "timestamp": "2026-05-04T15:45:42.548453"
+        },
+        {
+          "claim": "Zunder ha establecido alianzas estratégicas, como la de Moeve que elige a Zunder como socio tecnológico para gestionar su red de carga, y la integración de UTA Edenred en su red, ampliando su alcance y servicios.",
+          "confidence": "HIGH",
+          "sources": [
             "https://es.linkedin.com/company/zundereu"
           ],
-          "uncertainty": "La afirmación de liderazgo no pudo ser verificada con datos de cuota de mercado debido a la falla de la herramienta `read_csv_electromaps`.",
+          "uncertainty": null,
+          "human_review": false,
+          "timestamp": "2026-05-04T15:45:42.548455"
+        },
+        {
+          "claim": "El valor de la red de Zunder se refleja en su activo total de 167.87M€, más que en sus ventas actuales, y se estima que el EBITDA será positivo cuando la red supere los 1.500 puntos activos.",
+          "confidence": "HIGH",
+          "sources": [
+            "ZUNDER (1).pdf"
+          ],
+          "uncertainty": null,
+          "human_review": false,
+          "timestamp": "2026-05-04T15:45:42.548457"
+        },
+        {
+          "claim": "No fue posible obtener datos cuantitativos de cuota de mercado y ranking de operadores de puntos de recarga HPC en España a través de la herramienta Electromaps debido a un error en la lectura del CSV.",
+          "confidence": "HIGH",
+          "sources": [
+            "read_csv_electromaps()"
+          ],
+          "uncertainty": "La falta de datos de Electromaps impide un análisis cuantitativo preciso de la cuota de mercado de Zunder y sus competidores.",
           "human_review": true,
-          "timestamp": "2026-04-28T17:03:07.745976"
+          "timestamp": "2026-05-04T15:45:42.548459"
         }
       ],
       "dashboard_metrics": {
@@ -97,29 +96,29 @@
           {
             "name": "Iberdrola",
             "awareness": 5,
-            "motivation": 5,
-            "capability": 4,
-            "response_probability": 90,
+            "motivation": 4,
+            "capability": 5,
+            "response_probability": 85,
             "timeline": "0-6 meses",
-            "most_likely_response": "Acelerar la expansión de su propia red de recarga HPC y buscar alianzas estratégicas."
+            "most_likely_response": "Expansión agresiva de su propia red de recarga y posibles alianzas estratégicas."
           },
           {
-            "name": "Zunder (target)",
-            "awareness": 4,
+            "name": "Zunder",
+            "awareness": 5,
             "motivation": 5,
             "capability": 4,
             "response_probability": 95,
             "timeline": "0-3 meses",
-            "most_likely_response": "Continuar con su plan de expansión agresivo, buscando nuevas rondas de financiación o alianzas."
+            "most_likely_response": "Continuar con su plan de expansión de red y búsqueda de financiación/socios."
           },
           {
             "name": "Cepsa/Moeve",
-            "awareness": 3,
+            "awareness": 4,
             "motivation": 4,
             "capability": 3,
             "response_probability": 70,
-            "timeline": "6-12 meses",
-            "most_likely_response": "Aumentar la inversión en su red de recarga y buscar diferenciación a través de servicios adicionales."
+            "timeline": "3-9 meses",
+            "most_likely_response": "Fortalecer su red de recarga, posiblemente a través de alianzas o adquisiciones menores."
           },
           {
             "name": "Endesa X-Way",
@@ -127,8 +126,8 @@
             "motivation": 4,
             "capability": 4,
             "response_probability": 80,
-            "timeline": "3-9 meses",
-            "most_likely_response": "Continuar con su estrategia de despliegue de puntos de recarga y posibles acuerdos con otros actores."
+            "timeline": "0-6 meses",
+            "most_likely_response": "Acelerar el despliegue de su infraestructura de recarga y mejorar la experiencia del usuario."
           }
         ],
         "scenarios": [
@@ -137,36 +136,36 @@
             "probability": 45,
             "bev_axis": "Rápido",
             "consolidation_axis": "Consolidado",
-            "action": "Adquisición de Zunder para consolidar la posición de Repsol como líder en HPC.",
-            "description": "Rápida adopción de BEV y consolidación del mercado de recarga por grandes operadores.",
-            "npv_estimate_m": 43
+            "action": "Adquisición rápida y agresiva para asegurar liderazgo.",
+            "description": "Crecimiento acelerado de BEV y consolidación del mercado de recarga. Zunder se convierte en un activo estratégico clave.",
+            "npv_estimate_m": 60
           },
           {
             "name": "Guerra de Desgaste",
             "probability": 25,
             "bev_axis": "Rápido",
             "consolidation_axis": "Fragmentado",
-            "action": "Inversión selectiva en ubicaciones estratégicas y alianzas, sin adquisición.",
-            "description": "Rápida adopción de BEV, pero el mercado de recarga permanece fragmentado con muchos pequeños operadores.",
-            "npv_estimate_m": 20
+            "action": "Adquisición cautelosa, enfocada en sinergias y eficiencia.",
+            "description": "Crecimiento rápido de BEV pero con alta competencia y fragmentación del mercado, presionando márgenes.",
+            "npv_estimate_m": 30
           },
           {
             "name": "Oasis Lento",
-            "probability": 15,
+            "probability": 20,
             "bev_axis": "Lento",
             "consolidation_axis": "Consolidado",
-            "action": "Monitoreo del mercado y posibles adquisiciones a menor escala si la consolidación avanza.",
-            "description": "Lenta adopción de BEV, pero el mercado de recarga se consolida entre pocos grandes actores.",
-            "npv_estimate_m": 10
+            "action": "Adquisición estratégica a menor precio, con enfoque a largo plazo.",
+            "description": "Crecimiento lento de BEV pero con un mercado de recarga consolidado, lo que permite una planificación más estable.",
+            "npv_estimate_m": 20
           },
           {
             "name": "Travesía del Desierto",
-            "probability": 15,
+            "probability": 10,
             "bev_axis": "Lento",
             "consolidation_axis": "Fragmentado",
-            "action": "Reevaluar la estrategia de inversión en recarga, enfocándose en la rentabilidad de los activos existentes.",
-            "description": "Lenta adopción de BEV y un mercado de recarga fragmentado y poco rentable.",
-            "npv_estimate_m": -5
+            "action": "No adquirir, o considerar una participación minoritaria.",
+            "description": "Crecimiento lento de BEV y un mercado de recarga fragmentado, lo que dificulta la rentabilidad y la escala.",
+            "npv_estimate_m": 10
           }
         ],
         "ews_alerts": [
@@ -175,73 +174,69 @@
             "indicator": "Crecimiento de matriculaciones BEV",
             "source_url": "https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/",
             "frequency": "Trimestral",
-            "threshold": ">10% crecimiento interanual",
-            "action": "Evaluar aceleración de planes de expansión de recarga.",
-            "owner": "M&A CI"
-          },
-          {
-            "kit": "KIT-1",
-            "indicator": "Nuevos parques HPC de competidores",
-            "source_url": "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana",
-            "frequency": "Mensual",
-            "threshold": "Inauguración de 5+ puntos HPC por competidor",
-            "action": "Analizar impacto en cuota de mercado y planificar respuesta.",
-            "owner": "M&A CI"
+            "threshold": ">10% YoY",
+            "action": "Revisar plan de expansión de infraestructura de recarga.",
+            "owner": "Movilidad Eléctrica"
           },
           {
             "kit": "KIT-2",
-            "indicator": "Acuerdos de financiación de Zunder",
+            "indicator": "Nuevos acuerdos de financiación de competidores",
             "source_url": "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana",
-            "frequency": "Trimestral",
-            "threshold": ">50M€ en nueva financiación",
-            "action": "Reevaluar valoración de Zunder y estrategia de adquisición.",
-            "owner": "M&A CI"
-          },
-          {
-            "kit": "KIT-2",
-            "indicator": "Alianzas estratégicas de Zunder (ej. con flotas)",
-            "source_url": "https://es.linkedin.com/company/zundereu",
             "frequency": "Mensual",
-            "threshold": "Anuncio de 2+ nuevas alianzas significativas",
-            "action": "Evaluar el impacto en la base de clientes y la propuesta de valor de Zunder.",
-            "owner": "M&A CI"
+            "threshold": "Anuncios >100M€",
+            "action": "Evaluar impacto en la capacidad de inversión y expansión.",
+            "owner": "Inteligencia Competitiva"
           },
           {
             "kit": "KIT-3",
-            "indicator": "Cambios regulatorios (AFIR)",
+            "indicator": "Despliegue de puntos HPC por Zunder",
+            "source_url": "https://es.linkedin.com/company/zundereu",
+            "frequency": "Semanal",
+            "threshold": ">5 nuevas estaciones/mes",
+            "action": "Monitorizar ritmo de expansión y cobertura geográfica.",
+            "owner": "M&A"
+          },
+          {
+            "kit": "CROSS",
+            "indicator": "Cambios regulatorios AFIR",
             "source_url": "https://eur-lex.europa.eu/legal-content/es/ALL/?uri=CELEX:32023R1804",
             "frequency": "Trimestral",
-            "threshold": "Publicación de nuevas directrices o modificaciones",
-            "action": "Evaluar impacto en la rentabilidad y requisitos de la red de recarga.",
-            "owner": "Legal/Regulatorio"
+            "threshold": "Nuevas obligaciones de infraestructura",
+            "action": "Evaluar impacto en costes y oportunidades de negocio.",
+            "owner": "Regulación y Asuntos Públicos"
           },
           {
-            "kit": "CROSS",
-            "indicator": "Cuota de mercado de Zunder en HPC",
-            "source_url": "N/A",
-            "frequency": "Mensual",
-            "threshold": "Zunder supera el 20% de cuota de mercado en HPC",
-            "action": "Reevaluar la urgencia de la adquisición.",
-            "owner": "M&A CI",
-            "uncertainty": "Este indicador no pudo ser calculado debido a la falla de la herramienta `read_csv_electromaps`.",
-            "human_review": true
+            "kit": "KIT-1",
+            "indicator": "Evolución EBITDA Zunder",
+            "source_url": "ZUNDER (1).pdf",
+            "frequency": "Anual",
+            "threshold": "EBITDA > 0",
+            "action": "Reevaluar modelo de negocio y proyecciones financieras.",
+            "owner": "Finanzas M&A"
           },
           {
-            "kit": "CROSS",
-            "indicator": "Número de puntos HPC de Zunder",
-            "source_url": "N/A",
+            "kit": "KIT-2",
+            "indicator": "Alianzas estratégicas de competidores",
+            "source_url": "https://es.linkedin.com/company/zundereu",
             "frequency": "Mensual",
-            "threshold": "Zunder supera los 500 puntos HPC operativos",
-            "action": "Evaluar la escala operativa y el valor de la red.",
-            "owner": "M&A CI",
-            "uncertainty": "Este indicador no pudo ser calculado debido a la falla de la herramienta `read_csv_electromaps`.",
-            "human_review": true
+            "threshold": "Acuerdos con grandes operadores/marcas",
+            "action": "Analizar impacto en cuota de mercado y posicionamiento.",
+            "owner": "Inteligencia Competitiva"
+          },
+          {
+            "kit": "KIT-3",
+            "indicator": "Disponibilidad de caja de Zunder",
+            "source_url": "ZUNDER (1).pdf",
+            "frequency": "Anual",
+            "threshold": "<5M€",
+            "action": "Evaluar riesgo de liquidez y necesidad de financiación adicional.",
+            "owner": "Finanzas M&A"
           }
         ],
         "financial_summary": {
-          "ev_range_min_m": 100,
-          "ev_range_max_m": 160,
-          "ev_base_m": 130,
+          "ev_range_min_m": 130,
+          "ev_range_max_m": 173,
+          "ev_base_m": 150,
           "npv_expected_value_m": 43,
           "walk_away_price_m": 130,
           "wacc_pct": 8.5
@@ -249,14 +244,31 @@
       },
       "trace": [
         {
+          "tool_call": "read_pdf_financials_zunder",
+          "args": {},
+          "role": "model"
+        },
+        {
+          "tool_response": "read_pdf_financials_zunder",
+          "ok": true
+        },
+        {
           "tool_call": "fetch_all_osint_sources",
           "args": {},
           "role": "model"
         },
         {
+          "tool_response": "fetch_all_osint_sources",
+          "ok": true
+        },
+        {
           "tool_call": "read_csv_electromaps",
           "args": {},
           "role": "model"
+        },
+        {
+          "tool_response": "read_csv_electromaps",
+          "ok": true
         },
         {
           "tool_call": "read_csv_electromaps",
@@ -267,21 +279,13 @@
           "role": "model"
         },
         {
-          "tool_response": "fetch_all_osint_sources",
-          "ok": true
-        },
-        {
-          "tool_response": "read_csv_electromaps",
-          "ok": true
-        },
-        {
           "tool_response": "read_csv_electromaps",
           "ok": true
         }
       ],
-      "tool_calls_count": 3,
-      "elapsed_seconds": 83.4,
-      "timestamp": "2026-04-28T17:03:07.746056"
+      "tool_calls_count": 4,
+      "elapsed_seconds": 101.9,
+      "timestamp": "2026-05-04T15:45:42.548504"
     }
   ],
   "dashboard_metrics": {
@@ -289,29 +293,29 @@
       {
         "name": "Iberdrola",
         "awareness": 5,
-        "motivation": 5,
-        "capability": 4,
-        "response_probability": 90,
+        "motivation": 4,
+        "capability": 5,
+        "response_probability": 85,
         "timeline": "0-6 meses",
-        "most_likely_response": "Acelerar la expansión de su propia red de recarga HPC y buscar alianzas estratégicas."
+        "most_likely_response": "Expansión agresiva de su propia red de recarga y posibles alianzas estratégicas."
       },
       {
-        "name": "Zunder (target)",
-        "awareness": 4,
+        "name": "Zunder",
+        "awareness": 5,
         "motivation": 5,
         "capability": 4,
         "response_probability": 95,
         "timeline": "0-3 meses",
-        "most_likely_response": "Continuar con su plan de expansión agresivo, buscando nuevas rondas de financiación o alianzas."
+        "most_likely_response": "Continuar con su plan de expansión de red y búsqueda de financiación/socios."
       },
       {
         "name": "Cepsa/Moeve",
-        "awareness": 3,
+        "awareness": 4,
         "motivation": 4,
         "capability": 3,
         "response_probability": 70,
-        "timeline": "6-12 meses",
-        "most_likely_response": "Aumentar la inversión en su red de recarga y buscar diferenciación a través de servicios adicionales."
+        "timeline": "3-9 meses",
+        "most_likely_response": "Fortalecer su red de recarga, posiblemente a través de alianzas o adquisiciones menores."
       },
       {
         "name": "Endesa X-Way",
@@ -319,8 +323,8 @@
         "motivation": 4,
         "capability": 4,
         "response_probability": 80,
-        "timeline": "3-9 meses",
-        "most_likely_response": "Continuar con su estrategia de despliegue de puntos de recarga y posibles acuerdos con otros actores."
+        "timeline": "0-6 meses",
+        "most_likely_response": "Acelerar el despliegue de su infraestructura de recarga y mejorar la experiencia del usuario."
       }
     ],
     "scenarios": [
@@ -329,36 +333,36 @@
         "probability": 45,
         "bev_axis": "Rápido",
         "consolidation_axis": "Consolidado",
-        "action": "Adquisición de Zunder para consolidar la posición de Repsol como líder en HPC.",
-        "description": "Rápida adopción de BEV y consolidación del mercado de recarga por grandes operadores.",
-        "npv_estimate_m": 43
+        "action": "Adquisición rápida y agresiva para asegurar liderazgo.",
+        "description": "Crecimiento acelerado de BEV y consolidación del mercado de recarga. Zunder se convierte en un activo estratégico clave.",
+        "npv_estimate_m": 60
       },
       {
         "name": "Guerra de Desgaste",
         "probability": 25,
         "bev_axis": "Rápido",
         "consolidation_axis": "Fragmentado",
-        "action": "Inversión selectiva en ubicaciones estratégicas y alianzas, sin adquisición.",
-        "description": "Rápida adopción de BEV, pero el mercado de recarga permanece fragmentado con muchos pequeños operadores.",
-        "npv_estimate_m": 20
+        "action": "Adquisición cautelosa, enfocada en sinergias y eficiencia.",
+        "description": "Crecimiento rápido de BEV pero con alta competencia y fragmentación del mercado, presionando márgenes.",
+        "npv_estimate_m": 30
       },
       {
         "name": "Oasis Lento",
-        "probability": 15,
+        "probability": 20,
         "bev_axis": "Lento",
         "consolidation_axis": "Consolidado",
-        "action": "Monitoreo del mercado y posibles adquisiciones a menor escala si la consolidación avanza.",
-        "description": "Lenta adopción de BEV, pero el mercado de recarga se consolida entre pocos grandes actores.",
-        "npv_estimate_m": 10
+        "action": "Adquisición estratégica a menor precio, con enfoque a largo plazo.",
+        "description": "Crecimiento lento de BEV pero con un mercado de recarga consolidado, lo que permite una planificación más estable.",
+        "npv_estimate_m": 20
       },
       {
         "name": "Travesía del Desierto",
-        "probability": 15,
+        "probability": 10,
         "bev_axis": "Lento",
         "consolidation_axis": "Fragmentado",
-        "action": "Reevaluar la estrategia de inversión en recarga, enfocándose en la rentabilidad de los activos existentes.",
-        "description": "Lenta adopción de BEV y un mercado de recarga fragmentado y poco rentable.",
-        "npv_estimate_m": -5
+        "action": "No adquirir, o considerar una participación minoritaria.",
+        "description": "Crecimiento lento de BEV y un mercado de recarga fragmentado, lo que dificulta la rentabilidad y la escala.",
+        "npv_estimate_m": 10
       }
     ],
     "ews_alerts": [
@@ -367,73 +371,69 @@
         "indicator": "Crecimiento de matriculaciones BEV",
         "source_url": "https://anfac.com/los-turismos-electrificados-cierran-2025-con-225-616-unidades-vendidas-un-946-mas-que-2024/",
         "frequency": "Trimestral",
-        "threshold": ">10% crecimiento interanual",
-        "action": "Evaluar aceleración de planes de expansión de recarga.",
-        "owner": "M&A CI"
-      },
-      {
-        "kit": "KIT-1",
-        "indicator": "Nuevos parques HPC de competidores",
-        "source_url": "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana",
-        "frequency": "Mensual",
-        "threshold": "Inauguración de 5+ puntos HPC por competidor",
-        "action": "Analizar impacto en cuota de mercado y planificar respuesta.",
-        "owner": "M&A CI"
+        "threshold": ">10% YoY",
+        "action": "Revisar plan de expansión de infraestructura de recarga.",
+        "owner": "Movilidad Eléctrica"
       },
       {
         "kit": "KIT-2",
-        "indicator": "Acuerdos de financiación de Zunder",
+        "indicator": "Nuevos acuerdos de financiación de competidores",
         "source_url": "https://www.electrive.com/es/2024/12/07/zunder-inaugura-el-mayor-parque-de-recarga-rapida-de-espana",
-        "frequency": "Trimestral",
-        "threshold": ">50M€ en nueva financiación",
-        "action": "Reevaluar valoración de Zunder y estrategia de adquisición.",
-        "owner": "M&A CI"
-      },
-      {
-        "kit": "KIT-2",
-        "indicator": "Alianzas estratégicas de Zunder (ej. con flotas)",
-        "source_url": "https://es.linkedin.com/company/zundereu",
         "frequency": "Mensual",
-        "threshold": "Anuncio de 2+ nuevas alianzas significativas",
-        "action": "Evaluar el impacto en la base de clientes y la propuesta de valor de Zunder.",
-        "owner": "M&A CI"
+        "threshold": "Anuncios >100M€",
+        "action": "Evaluar impacto en la capacidad de inversión y expansión.",
+        "owner": "Inteligencia Competitiva"
       },
       {
         "kit": "KIT-3",
-        "indicator": "Cambios regulatorios (AFIR)",
+        "indicator": "Despliegue de puntos HPC por Zunder",
+        "source_url": "https://es.linkedin.com/company/zundereu",
+        "frequency": "Semanal",
+        "threshold": ">5 nuevas estaciones/mes",
+        "action": "Monitorizar ritmo de expansión y cobertura geográfica.",
+        "owner": "M&A"
+      },
+      {
+        "kit": "CROSS",
+        "indicator": "Cambios regulatorios AFIR",
         "source_url": "https://eur-lex.europa.eu/legal-content/es/ALL/?uri=CELEX:32023R1804",
         "frequency": "Trimestral",
-        "threshold": "Publicación de nuevas directrices o modificaciones",
-        "action": "Evaluar impacto en la rentabilidad y requisitos de la red de recarga.",
-        "owner": "Legal/Regulatorio"
+        "threshold": "Nuevas obligaciones de infraestructura",
+        "action": "Evaluar impacto en costes y oportunidades de negocio.",
+        "owner": "Regulación y Asuntos Públicos"
       },
       {
-        "kit": "CROSS",
-        "indicator": "Cuota de mercado de Zunder en HPC",
-        "source_url": "N/A",
-        "frequency": "Mensual",
-        "threshold": "Zunder supera el 20% de cuota de mercado en HPC",
-        "action": "Reevaluar la urgencia de la adquisición.",
-        "owner": "M&A CI",
-        "uncertainty": "Este indicador no pudo ser calculado debido a la falla de la herramienta `read_csv_electromaps`.",
-        "human_review": true
+        "kit": "KIT-1",
+        "indicator": "Evolución EBITDA Zunder",
+        "source_url": "ZUNDER (1).pdf",
+        "frequency": "Anual",
+        "threshold": "EBITDA > 0",
+        "action": "Reevaluar modelo de negocio y proyecciones financieras.",
+        "owner": "Finanzas M&A"
       },
       {
-        "kit": "CROSS",
-        "indicator": "Número de puntos HPC de Zunder",
-        "source_url": "N/A",
+        "kit": "KIT-2",
+        "indicator": "Alianzas estratégicas de competidores",
+        "source_url": "https://es.linkedin.com/company/zundereu",
         "frequency": "Mensual",
-        "threshold": "Zunder supera los 500 puntos HPC operativos",
-        "action": "Evaluar la escala operativa y el valor de la red.",
-        "owner": "M&A CI",
-        "uncertainty": "Este indicador no pudo ser calculado debido a la falla de la herramienta `read_csv_electromaps`.",
-        "human_review": true
+        "threshold": "Acuerdos con grandes operadores/marcas",
+        "action": "Analizar impacto en cuota de mercado y posicionamiento.",
+        "owner": "Inteligencia Competitiva"
+      },
+      {
+        "kit": "KIT-3",
+        "indicator": "Disponibilidad de caja de Zunder",
+        "source_url": "ZUNDER (1).pdf",
+        "frequency": "Anual",
+        "threshold": "<5M€",
+        "action": "Evaluar riesgo de liquidez y necesidad de financiación adicional.",
+        "owner": "Finanzas M&A"
       }
     ],
     "financial_summary": {
-      "ev_range_min_m": 100,
-      "ev_range_max_m": 160,
-      "ev_base_m": 130,
+      "ev_range_min_m": 130,
+      "ev_range_max_m": 173,
+      "ev_base_m": 150,
       "npv_expected_value_m": 43,
       "walk_away_price_m": 130,
       "wacc_pct": 8.5
@@ -443,7 +443,7 @@
     "total_findings": 8,
     "high_confidence": 7,
     "medium_confidence": 1,
-    "low_confidence_human_review": 1,
+    "low_confidence_human_review": 2,
     "verdict": "CONDITIONAL GO",
     "confidence_level": "MEDIUM"
   }
